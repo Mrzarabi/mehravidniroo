@@ -34,16 +34,16 @@ class Category extends Model
     /**
      * Each Category can has many Children
      */
-    public function children() {
-        return $this->hasMany(Category::class, 'parent');
+    public function categories() {
+        return $this->hasMany(Category::class);
     }
 
     /**
      * Get the all category parent.
      */
-    public function parent_group()
+    public function parent()
     {
-        return $this->belongsTo(Category::class, 'parent');
+        return $this->belongsTo(Category::class);
     }
 
     /**
