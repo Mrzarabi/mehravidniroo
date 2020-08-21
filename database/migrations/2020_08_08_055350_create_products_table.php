@@ -41,6 +41,7 @@ class CreateProductsTable extends Migration
             $table->string('title');
             $table->string('desc')->nullable();
             $table->text('body')->nullable();
+            $table->unsignedInteger('code')->nullable();
             $table->unsignedBigInteger('u_price')->nullable();
             $table->unsignedBigInteger('c_price')->nullable();
             $table->unsignedBigInteger('inventory')->nullable();
