@@ -18,7 +18,7 @@ class Category extends JsonResource
             'title' => $this->title,
             'desc' => $this->desc,
             'image' => $this->image,
-            'children' => new SubCategoryCollection($this->categories)
+            // 'children' => new SubCategoryCollection($this->categories)
         ];
     }
 }
