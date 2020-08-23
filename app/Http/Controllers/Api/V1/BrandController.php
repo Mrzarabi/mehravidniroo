@@ -46,7 +46,7 @@ class BrandController extends Controller
 
         return $this->response([
             
-        ])
+        ]);
     }
 
     /**
