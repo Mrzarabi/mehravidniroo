@@ -39,7 +39,14 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $brand = new Brand;
+        $brand->create(array_merge( $request->all(), [
+            'image' => $this->upload_image($request->file('image'))
+        ] ));
+
+        return $this->response([
+            
+        ])
     }
 
     /**

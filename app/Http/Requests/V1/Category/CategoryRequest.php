@@ -24,8 +24,8 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'         => 'required|string|max:50',
-            'desc'   => 'nullable|string|max:255',
+            'title'          => 'required|string|max:50',
+            'desc'           => 'nullable|string|max:255',
             'image'          => [
                 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024'
             ],
