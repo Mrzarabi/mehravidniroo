@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\Category\CategoryRequest;
 use App\Http\Resources\Api\V1\Category\Category as CategoryResource;
 use App\Http\Resources\Api\V1\Category\CategoryCollection;
 use App\Models\Category;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -28,7 +30,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        
+        //
     }
 
     /**
@@ -37,9 +39,24 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
+        $category = new Category;
+
+        if($request->hasFile('image')) {
+            
+            $category->create( array_merge( $request->all(), [
+                'image' => $this->upload_image($request->file('image'))
+            ]  
+            ));
+        } else {
+            $category->create( array_merge( $request->all() ));
+        }
+
+        return response([
+            'data' => 'دسته بندی با موققیت ثبت شد',
+            'status' => 'success'
+        ]);
     }
 
     /**
@@ -50,7 +67,10 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return new CategoryResource($category);
+        $categories = Category::paginate(5);
+        return new CategoryCollection($categories);
+
+        // return new CategoryResource($category);
     }
 
     /**
@@ -71,9 +91,22 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, Category $category)
+    {;
+        if($request->hasFile('image')) {
+            $image = $this->upload_image($request->file('image'));
+        } else {
+            $image = $category->image;
+        }
+        $category->update(array_merge($request->all(), [
+                'image' => $image
+            ] 
+        ));
+
+        return response([
+            'data' => 'دسته بندی با موفقیت به روز رسانی شد',
+            'status' => 'success' 
+        ]);
     }
 
     /**
@@ -82,8 +115,13 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
+
+        return response([
+            'data' => 'دسته بندی با موفقیت حذف شد',
+            'status' => 'success'
+        ]);
     }
 }
