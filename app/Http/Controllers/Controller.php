@@ -46,11 +46,4 @@ class Controller extends BaseController
         $image->move( public_path("$file_path/$file_name.$file_ext") );
         return "/$file_path/$file_name.$file_ext";
     }
-
-    public function n_responce( $input ) {
-        return [
-            'data' => "{$input} با موفقیت ثبت شد",
-            'status' => 'success'
-        ];
-    }
 }
