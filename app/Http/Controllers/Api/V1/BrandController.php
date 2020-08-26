@@ -43,6 +43,10 @@ class BrandController extends Controller
         $brand->create(array_merge( $request->all(), [
             'image' => $this->upload_image($request->file('image'))
         ] ));
+
+        return $this->response([
+            
+        ]);
     }
 
     /**
