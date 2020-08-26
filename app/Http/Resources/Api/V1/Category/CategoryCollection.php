@@ -17,9 +17,12 @@ class CategoryCollection extends ResourceCollection
         return [
             'data' => $this->collection->map(function($item) {
                 return [
+                    'id'    => $item->id,
+                    'category_id' => $item->category_id,
                     'title' => $item->title,
                     'desc' => $item->desc,
                     'image' => $item->image,
+                    'children' => new SubCategoryCollection($item->categories),
                 ];
             })
         ];
