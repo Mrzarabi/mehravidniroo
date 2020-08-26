@@ -67,10 +67,10 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        $categories = Category::paginate(5);
-        return new CategoryCollection($categories);
-
-        // return new CategoryResource($category);
+        // $categories = Category::paginate(5);
+        // return new CategoryCollection($categories);
+        
+        return new CategoryResource($category);
     }
 
     /**
