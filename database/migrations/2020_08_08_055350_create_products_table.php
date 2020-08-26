@@ -31,15 +31,15 @@ class CreateProductsTable extends Migration
                 ->onUpdate('cascade');
 
                 
-            $table->unsignedBigInteger('brand_id')->nullable();
-            $table->foreign('brand_id')
-                ->references('id')
-                ->on('brands')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+            // $table->unsignedBigInteger('brand_id')->nullable();
+            // $table->foreign('brand_id')
+            //     ->references('id')
+            //     ->on('brands')
+            //     ->onDelete('cascade')
+            //     ->onUpdate('cascade');
 
             $table->string('title');
-            $table->string('desc')->nullable();
+            $table->text('desc')->nullable();
             $table->text('body')->nullable();
             $table->unsignedInteger('code')->nullable();
             $table->unsignedBigInteger('u_price')->nullable();
