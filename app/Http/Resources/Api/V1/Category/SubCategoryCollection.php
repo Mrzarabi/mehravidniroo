@@ -20,8 +20,9 @@ class SubCategoryCollection extends ResourceCollection
                     'id'    => $item->id,
                     'category_id' => $item->category_id,
                     'title' => $item->title,
-                    'desc' => $item->desc,
-                    'image' => $item->image,
+                    // 'desc' => $item->desc,
+                    // 'image' => $item->image,
+                    'children' => new SubCategoryCollection($item->categories),
                 ];
             })
         ];
@@ -30,7 +31,6 @@ class SubCategoryCollection extends ResourceCollection
     public function with($request)
     {
         return [
-            // 'data' => '',
             'status' => 'success'
         ];
     }
