@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Product\ProductRequest;
 use App\Http\Resources\Api\V1\Product\Product as ProductResource;
+use App\Http\Resources\Api\V1\Product\ProductCollection;
+use App\Models\Category;
 use App\Models\Product;
 use App\User;
 use Illuminate\Http\Request;
@@ -18,7 +20,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::all();
+        return new ProductCollection($products);
     }
 
     /**
@@ -37,13 +40,12 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductRequest $request, User $user)
+    public function store(ProductRequest $request, Category $category)
     {
-        // return $request;    
         $product = new Product;
 
-        $product()->create( array_merge( $request->all(),  [
-            'user_id' => $user->id
+        auth()->user->product->create( array_merge( $request->all(),  [
+            'category_id' => $category->id
         ]
         ));
 
@@ -84,7 +86,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**
@@ -93,8 +95,13 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        return [
+            'data' => 'محصول با موفقیت حذف شد',
+            'status' => 'success'
+        ];
     }
 }
