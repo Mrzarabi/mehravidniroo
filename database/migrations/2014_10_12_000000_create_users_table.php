@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->uuid('id')->primary();
             // $table->id();
 
+            $table->string('api_token')->unique();
             $table->string('avatar')->nullable();
             $table->string('name')->nullable();
             $table->string('family')->nullable();

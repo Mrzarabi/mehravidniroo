@@ -19,6 +19,7 @@ use Illuminate\Support\Str;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
+        'api_token' => Str::random(100),
         'name' => $faker->name,
         'family' => $faker->name,
         'avatar' => $faker->imageUrl(300, 300),
