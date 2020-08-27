@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('v1')->namespace('Api\V1')->group( function () {
+Route::prefix('v1')->group( function() {
+    
+    Auth::routes();
+});
+
+
+Route::prefix('v1')->namespace('Api\V1')->middleware('auth:api')->group( function () {
     
     Route::resource('category', 'CategoryController');
     Route::resource('product', 'ProductController');
