@@ -25,10 +25,10 @@ class CategoryRequest extends FormRequest
     {
         return [
             'title'          => 'required|string|max:50',
-            'desc'           => 'nullable|string|max:255',
-            'image'          => [
-                'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024'
-            ],
+            // 'desc'           => 'nullable|string|max:255',
+            // 'image'          => [
+            //     'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024'
+            // ],
 
             /*Relation */
             'category_id'     => 'nullable|integer|exists:categories,id',
