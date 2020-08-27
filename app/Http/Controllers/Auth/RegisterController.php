@@ -72,8 +72,10 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        return response([
-            'status' => 'success'
-        ]);
+        // return new UserResource(auth()->user());
+
+        // return response([
+        //     'status' => 'success'
+        // ]);
     }
 }
