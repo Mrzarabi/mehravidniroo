@@ -18,8 +18,8 @@ class Category extends JsonResource
         return [
             'id'    => $this->id,
             'title' => $this->title,
-            'desc' => $this->desc,
-            'image' => $this->image,
+            // 'desc' => $this->desc,
+            // 'image' => $this->image,
             'children' => new SubCategoryCollection($this->categories),
             'products' => new ProductCollection($this->products)
         ];
