@@ -20,7 +20,7 @@ class ProductCollection extends ResourceCollection
                     'category' => $item->category->title,
                     'title' => $item->title,
                     'desc' => $item->desc,
-                    'images' => $this->images,
+                    'images' => $item->images,
                     // 'body' => $item->body,
                     'u_price' => $item->u_price,
                     'c_price' => $item->c_price,
