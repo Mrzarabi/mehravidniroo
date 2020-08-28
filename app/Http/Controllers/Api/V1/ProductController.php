@@ -20,7 +20,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::paginate(9);
         return new ProductCollection($products);
     }
 
@@ -43,6 +43,16 @@ class ProductController extends Controller
     public function store(ProductRequest $request, Category $category)
     {
         $product = new Product;
+
+        if($request->hasFile('images')) {
+            foreach ($request->images as $image) {
+
+                auth()->user->product->create( array_merge( $request->all(),  [
+                    'images' => $this->upload_image(file($image))
+                ]
+                ));       
+            }
+        }
 
         auth()->user->product->create( array_merge( $request->all(),  [
             'category_id' => $category->id
