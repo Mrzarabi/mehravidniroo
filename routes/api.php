@@ -15,17 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('v1')->group( function() {
-    
-    Auth::routes();
-});
-
-
 Route::prefix('v1')->namespace('Api\V1')->group( function () {
 
-    Route::get('/user', function () {
-        return auth()->user();
-    });
-    Route::resource('category', 'CategoryController');
-    Route::resource('product', 'ProductController');
+    Route::post('login', 'UserController@login');
+    Route::post('register', 'UserController@register');
+
+    Route::middleware(['auth:api'])->group( function() {
+        Route::resource('category', 'CategoryController');
+        Route::resource('product', 'ProductController');
+        
+    }); 
+    
 });
