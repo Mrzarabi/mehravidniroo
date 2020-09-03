@@ -52,14 +52,6 @@ class Product extends Model
     }
 
     /**
-     * Get the all category parent.
-     */
-    public function brand()
-    {
-        return $this->belongsTo(Brand::class);
-    }
-
-    /**
      * Each product can has many Images
      */
     public function Images() {
