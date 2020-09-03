@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class ProductController extends Controller
 {
@@ -40,24 +41,26 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductRequest $request, Category $category)
+    public function store(ProductRequest $request)
     {
-        $product = new Product;
-
         if($request->hasFile('images')) {
-            foreach ($request->images as $image) {
 
-                auth()->user->product->create( array_merge( $request->all(),  [
-                    'images' => $this->upload_image(file($image))
-                ]
-                ));       
-            }
+            $images = Collection::wrap( $request->file('images') );
+
+            $images->each( function($image) use($request) {
+                
+                auth()->user()->products()->create( array_merge( $request->all(),
+                    [ 'images' => $images->each( function($image) {
+                            
+                        } 
+                    )]
+                )); 
+            });
+
+        } else {
+            auth()->user()->products()->create( array_merge( $request->all() ));
         }
 
-        auth()->user->product->create( array_merge( $request->all(),  [
-            'category_id' => $category->id
-        ]
-        ));
 
         return response([
             'data' => 'محصول با موفقیت ثبت گردید',
@@ -94,7 +97,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, Product $product)
     {
         
     }
