@@ -18,7 +18,9 @@ class CreateTicketsTable extends Migration
 
             $table->string('name');
             $table->string('email');
+            $table->string('phone_number')->nullable();
             $table->string('status')->default(0);
+            $table->string('title');
             $table->text('body');
             $table->string('image')->nullable();
 
