@@ -15,8 +15,10 @@ class Ticket extends Model
         'name',
         'email',
         'status',
+        'title',
         'body',
         'image',
+        'phone_number',
     ];
 
     /**
