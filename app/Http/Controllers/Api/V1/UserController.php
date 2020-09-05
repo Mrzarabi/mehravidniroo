@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\Ticket\TicketRequest;
 use App\Http\Requests\V1\User\UserRequest;
 use App\Http\Resources\Api\V1\User\User as UserResource;
-use App\Models\Ticket;
+use App\Http\Resources\Api\V1\User\UserCollection;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -63,6 +62,17 @@ class UserController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $users = User::paginate(10)->get();
+        return new UserCollection($users);
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -95,6 +105,24 @@ class UserController extends Controller
 
         return response([
             'data' => 'اطلاعات شما با موفقیت به روز رسانی شد',
+            'status' => 'success'
+        ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(User $user)
+    {
+        foreach ($user as $key ) {
+            $key->delete();
+        }
+
+        return response([
+            'data' => 'کاربران مورد نظر با موفقیت حذف شد',
             'status' => 'success'
         ]);
     }
