@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\Images\ImageRequest;
 use App\Http\Requests\V1\Product\ProductRequest;
 use App\Http\Resources\Api\V1\Product\Product as ProductResource;
 use App\Http\Resources\Api\V1\Product\ProductCollection;
@@ -43,27 +44,34 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        if($request->hasFile('images')) {
-
-            $images = Collection::wrap( $request->file('images') );
-
-            $images->each( function($image) use($request) {
-                
-                auth()->user()->products()->create( array_merge( $request->all(),
-                    [ 'images' => $images->each( function($image) {
-                            
-                        } 
-                    )]
-                )); 
-            });
-
-        } else {
-            auth()->user()->products()->create( array_merge( $request->all() ));
-        }
-
+        $product = auth()->user()->products()->create( array_merge( $request->all()) );
 
         return response([
             'data' => 'محصول با موفقیت ثبت گردید',
+            'status' => 'success'
+        ]);
+    }
+
+    /**
+     * Store a newly created images in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function upload(ImageRequest $request, Product $product)
+    {
+        if($request->hasFile('images'))
+        {
+            $images = $request->file('images');
+            foreach ($images as $image) {
+                
+                $file = $this->upload_image($image);
+                $product->images()->create(['image' => $file]);
+            }
+        }
+
+        return response([
+            'data' => 'تصاویر با موفقیت آپلود شدند',
             'status' => 'success'
         ]);
     }
@@ -99,7 +107,38 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, Product $product)
     {
-        
+       $product->update($request->all());
+
+       return response([
+           'data' => 'محصول مورد نظر با موفقیت به روز رسانی شد',
+           'status' => 'success'
+       ]);
+    }
+
+    /**
+     * Store a newly created images in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateUpload(ImageRequest $request, Product $product)
+    {
+        if($request->hasFile('images'))
+        {
+            $images = $request->file('images');
+            foreach ($images as $image) {
+                
+                $file = $this->upload_image($image);
+                $product->images()->update(['image' => $file]);
+            }
+        } else {
+            $product->images()->update(['image' => $product->image->image]);
+        }
+
+        return response([
+            'data' => 'تصاویر با موفقیت به روز رسانی شدند',
+            'status' => 'success'
+        ]);
     }
 
     /**
