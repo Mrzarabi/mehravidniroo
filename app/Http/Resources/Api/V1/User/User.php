@@ -25,6 +25,7 @@ class User extends JsonResource
             'national_code'   => $this->national_code,
             'email' => $this->email,
             'api_token' => $this->api_token,
+            'password'  => $this->password
         ];
     }
 }
