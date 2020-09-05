@@ -39,6 +39,6 @@ class Image extends Model
      * Each Article belongs to one User
      */
     public function product() {
-        $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class);
     }
 }
