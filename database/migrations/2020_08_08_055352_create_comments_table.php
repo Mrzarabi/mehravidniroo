@@ -23,10 +23,10 @@ class CreateCommentsTable extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->unsignedBigInteger('article_id')->nullable();
-            $table->foreign('article_id')
+            $table->unsignedBigInteger('comment_id')->nullable();
+            $table->foreign('comment_id')
                 ->references('id')
-                ->on('articles')
+                ->on('comments')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
