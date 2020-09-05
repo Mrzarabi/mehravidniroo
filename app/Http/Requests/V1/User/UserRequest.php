@@ -31,7 +31,7 @@ class UserRequest extends FormRequest
             'name' => 'nullable|string|max:255',
             'family' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:255',
-            'phone_number' => 'nullable|regex:/^(\+98|0)?\d{10}$/',
+            'phone_number' => 'nullable|regex:/^09[0-9]{9}$/',
             'national_code' => 'nullable|regex:/^[0-9]{10}$/',
 
             'email' => ['required', 
