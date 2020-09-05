@@ -30,8 +30,6 @@ class ProductRequest extends FormRequest
             'u_price'           => 'nullable|integer|min:0',
             'c_price'           => 'nullable|integer|min:0',
             'inventory'           => 'nullable|integer|min:0',
-            'images'            => 'nullable',
-            'images.*'          => [ 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024' ],
 
             /**
              * Relations
