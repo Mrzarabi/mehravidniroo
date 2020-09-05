@@ -18,7 +18,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $tickets = Ticket::all();
+        $tickets = Ticket::paginate(10)->get();
         return new TicketCollection($tickets);
     }
 
