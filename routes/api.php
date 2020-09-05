@@ -24,6 +24,8 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
     Route::middleware(['auth:api'])->group( function() {
         Route::resource('category', 'CategoryController');
         Route::resource('product', 'ProductController');
+        Route::post('upload/{product}', 'ProductController@upload');
+        Route::post('upload/{product}', 'ProductController@updateUpload');
 
         Route::get('user/{user}', 'UserController@show');
         Route::put('user/{user}', 'UserController@update');
