@@ -3,6 +3,7 @@
 namespace App\Http\Requests\V1\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class UserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +25,19 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'avatar'          => [
+                'nullable', 'image', 'mimes:jpeg,jpg,png,gif',
+            ],
+            'name' => 'nullable|string|max:255',
+            'family' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:255',
+            'phone_number' => 'nullable|regex:/^(\+98|0)?\d{10}$/',
+            'national_code' => 'nullable|regex:/^[0-9]{10}$/',
+
+            'email' => ['required', 
+                Rule::unique('users')->ignore(request()->route()->parameters['user']), 
+                'string', 'email', 'max:255'
+            ],
         ];
     }
 }
