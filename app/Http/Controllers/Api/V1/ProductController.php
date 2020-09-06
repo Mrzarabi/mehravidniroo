@@ -153,7 +153,10 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        $product->delete();
+        foreach ($product as $key) {
+            
+            $key->delete();
+        }
 
         return [
             'data' => 'محصول با موفقیت حذف شد',
