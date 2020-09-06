@@ -68,7 +68,6 @@ class UserController extends Controller
      */
     public function index()
     {
-        return 'fukc';
         $users = User::paginate(10);
         return new UserCollection($users);
     }
@@ -99,7 +98,7 @@ class UserController extends Controller
         } else {
             $image = $user->avatar;
         }
-        
+
         $user->update(array_merge($request->all(), [
             'avatar' => $image
             ] 
