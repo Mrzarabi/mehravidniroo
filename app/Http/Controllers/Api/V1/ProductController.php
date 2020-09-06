@@ -45,9 +45,11 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $product = auth()->user()->products()->create( array_merge( $request->all()) );
+        $post = new ProductResource($product);
 
         return response([
-            'data' => 'محصول با موفقیت ثبت گردید',
+            'data' => $post->id,
+            'message' => 'محصول با موفقیت ثبت گردید', 
             'status' => 'success'
         ]);
     }
@@ -107,11 +109,13 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, Product $product)
     {
-       $product->update($request->all());
-
-       return response([
-           'data' => 'محصول مورد نظر با موفقیت به روز رسانی شد',
-           'status' => 'success'
+        $product->update($request->all());
+        $post = new ProductResource($product);
+        
+        return response([
+            'data' => $post->id,
+            'data' => 'محصول مورد نظر با موفقیت به روز رسانی شد',
+            'status' => 'success'
        ]);
     }
 
