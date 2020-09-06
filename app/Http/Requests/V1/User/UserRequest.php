@@ -25,9 +25,9 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'avatar'          => [
-                'nullable', 'image', 'mimes:jpeg,jpg,png,gif',
-            ],
+            // 'avatar'          => [
+            //     'nullable', 'image', 'mimes:jpeg,jpg,png,gif',
+            // ],
             'name' => 'nullable|string|max:255',
             'family' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:255',
