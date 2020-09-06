@@ -132,7 +132,7 @@ class ProductController extends Controller
                 $product->images()->update(['image' => $file]);
             }
         } else {
-            $product->images()->update(['image' => $product->image->image]);
+            $product->images()->update(['image' => $product->images()->image]);
         }
 
         return response([
