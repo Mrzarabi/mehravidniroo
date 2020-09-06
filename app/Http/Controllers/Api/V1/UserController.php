@@ -99,10 +99,11 @@ class UserController extends Controller
         } else {
             $image = $user->avatar;
         }
-
-        $user->update( array_merge($request->all()), [
+        
+        $user->update(array_merge($request->all(), [
             'avatar' => $image
-        ]);
+            ] 
+        ));
 
         return response([
             'data' => 'اطلاعات شما با موفقیت به روز رسانی شد',
