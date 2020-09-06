@@ -68,7 +68,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(10)->get();
+        return 'fukc';
+        $users = User::paginate(10);
         return new UserCollection($users);
     }
 
@@ -93,7 +94,6 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
-        return $request->hasFile('avatar');
         if($request->hasFile('avatar')) {
             $image = $this->upload_image($request->file('avatar'));
         } else {
