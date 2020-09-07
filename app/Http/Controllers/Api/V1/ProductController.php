@@ -111,7 +111,7 @@ class ProductController extends Controller
     {
         $product->update($request->all());
         $post = new ProductResource($product);
-        
+
         return response([
             'data' => $post->id,
             'data' => 'محصول مورد نظر با موفقیت به روز رسانی شد',
