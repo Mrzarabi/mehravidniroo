@@ -70,12 +70,14 @@ class ProductController extends Controller
                 $file = $this->upload_image($image);
                 $product->images()->create(['image' => $file]);
             }
-        }
+            return response([
+                'data' => 'تصاویر با موفقیت آپلود شدند',
+                'status' => 'success'
+            ]);
+        } else [
+            'fuck';
+        ]
 
-        return response([
-            'data' => 'تصاویر با موفقیت آپلود شدند',
-            'status' => 'success'
-        ]);
     }
 
     /**
