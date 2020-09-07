@@ -74,9 +74,9 @@ class ProductController extends Controller
                 'data' => 'تصاویر با موفقیت آپلود شدند',
                 'status' => 'success'
             ]);
-        } else [
-            'fuck';
-        ]
+        } else {
+            return 'fuck';
+        }
 
     }
 
