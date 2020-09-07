@@ -62,8 +62,8 @@ class ProductController extends Controller
      */
     public function upload(ImageRequest $request, Product $product)
     {
-        return json_decode($_POST['images']);
-        if($request->hasFile('images'))
+        $images = json_decode($_POST['images']);
+        if($request->images)
         {
             $images = $request->file('images');
             foreach ($images as $image) {
@@ -75,6 +75,7 @@ class ProductController extends Controller
                 'data' => 'تصاویر با موفقیت آپلود شدند',
                 'status' => 'success'
             ]);
+            return $image;
         } else {
             return 'fuck';
         }
