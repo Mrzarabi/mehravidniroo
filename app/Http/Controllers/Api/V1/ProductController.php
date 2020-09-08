@@ -63,7 +63,7 @@ class ProductController extends Controller
     public function upload(ImageRequest $request, Product $product)
     {
         // $images = json_decode($_POST['images']);
-        if($request->hasFile('images'))
+        if($request->images)
         {
             $images = Collection::wrap( $request->file('images') );
             
