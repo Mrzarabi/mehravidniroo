@@ -16,7 +16,8 @@ class Controller extends BaseController
     {
         $time = Carbon::now();
         $file_path = "uploads/images/{$time->year}/{$time->month}/{$time->day}";
-        $file_name = $time->timestamp;
+        $file_name = $image->getClientOriginalName();
+        $file_name = $time->timestamp . "-{$file_name}";
         $image->move(public_path($file_path) , $file_name);
         $file = $file_path . $file_name;
         return $file;
