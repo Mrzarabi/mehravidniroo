@@ -66,7 +66,7 @@ class ProductController extends Controller
         if($request->images)
         {
             $images = Collection::wrap( $request->images );
-            
+            return $images;
             $images->each( function($image) use($product) {
                 
                 $file = $this->upload_image($image);
