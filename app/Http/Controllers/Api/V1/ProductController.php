@@ -65,7 +65,7 @@ class ProductController extends Controller
         // $images = json_decode($_POST['images']);
         if($request->images)
         {
-            $images = Collection::wrap( $request->file('images') );
+            $images = Collection::wrap( $request->images );
             
             $images->each( function($image) use($product) {
                 
