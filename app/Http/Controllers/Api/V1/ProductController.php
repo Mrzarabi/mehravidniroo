@@ -62,24 +62,23 @@ class ProductController extends Controller
      */
     public function upload(ImageRequest $request, Product $product)
     {
-        $images = json_decode($_POST['images']);
-        if($request->images)
+        // $images = json_decode($_POST['images']);
+        if($request->hasFile('images'))
         {
-            $images = $request->file('images');
-            foreach ($images as $image) {
+            $images = Collection::wrap( $request->file('images') );
+            
+            $images->each( function($image) use($product) {
                 
                 $file = $this->upload_image($image);
                 $product->images()->create(['image' => $file]);
-            }
+            }); 
+                
+            
             return response([
                 'data' => 'تصاویر با موفقیت آپلود شدند',
                 'status' => 'success'
             ]);
-            return $image;
-        } else {
-            return 'fuck';
         }
-
     }
 
     /**
