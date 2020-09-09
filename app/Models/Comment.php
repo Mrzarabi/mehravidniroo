@@ -13,10 +13,11 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = [
-        'article_id',
+        'comment_id',
         'product_id',
         'body',
         'status',
+        'is_show',
     ];
 
     /**
@@ -60,5 +61,19 @@ class Comment extends Model
         return $this->belongsTo(Article::class);
     }
 
+    /**
+     * Each Comment can has many Children
+     */
+    public function Comments() {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * Get the all Comment parent.
+     */
+    public function parent()
+    {
+        return $this->belongsTo(Comment::class);
+    }
 
 }
