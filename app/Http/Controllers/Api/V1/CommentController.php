@@ -97,4 +97,38 @@ class CommentController extends Controller
             'status' => 'success'
         ]);
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function isShow(Comment $comment) 
+    {
+        $comment->update([
+            'is_show' => true
+        ]);
+        return response([
+            'data' => 'تغییرات مورد نظر انجام شد',
+            'status' => 'success'
+        ]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function commentStatus(Comment $comment) 
+    {
+        $comment->update([
+            'status' => true
+        ]);
+        return response([
+            'data' => 'تغییرات مورد نظر انجام شد',
+            'status' => 'success'
+        ]);
+    }
 }
