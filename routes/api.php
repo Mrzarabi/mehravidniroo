@@ -26,6 +26,7 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
         Route::resource('product', 'ProductController');
         Route::post('upload/{product}', 'ProductController@upload');
         Route::post('update/upload/{product}', 'ProductController@updateUpload');
+        Route::resource('comment', 'CommentController');
 
         Route::get('user', 'UserController@index');
         Route::get('user/{user}', 'UserController@show');
