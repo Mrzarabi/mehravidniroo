@@ -61,6 +61,6 @@ class Product extends Model
      * Each product can has many comments
      */
     public function comments() {
-        $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class);
     }
 }
