@@ -63,9 +63,10 @@ class ProductController extends Controller
     public function upload(ImageRequest $request, Product $product)
     {
         // $images = json_decode($_POST['images']);
-        if($request->images )
+        if($request->hasFile('images') )
         {
-            foreach ($request->images as $image) {
+            $images = $request->file('images');
+            foreach ($images as $image) {
                 
                 $file = $this->upload_image($image);
                 $product->images()->create(['image' => $file]);
