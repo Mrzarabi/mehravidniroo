@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\Comment\CommentRequest;
+use App\Http\Resources\Api\V1\Comment\CommentCollection;
+use App\Http\Resources\Api\V1\Comment\Comment as CommentResource;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -14,7 +18,8 @@ class CommentController extends Controller
      */
     public function index()
     {
-        
+        $comments = Comment::where('status', false)->get();
+        return new CommentCollection($comments);
     }
 
     /**
@@ -33,9 +38,14 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CommentRequest $request)
     {
-        //
+        auth()->user()->comments()->create( $request->all() );
+
+        return response([
+            'date' => 'نظر شما با موفقیت ثبت گردید',
+            'status' => 'success'
+        ]);
     }
 
     /**
@@ -44,9 +54,9 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Comment $comment)
     {
-        //
+        return new CommentResource($comment);
     }
 
     /**
@@ -78,8 +88,13 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Comment $comment)
     {
-        //
+        $comment->delete();
+
+        return response([
+            'data' => 'نظر شما با موفقیت حذف شد',
+            'status' => 'success'
+        ]);
     }
 }
