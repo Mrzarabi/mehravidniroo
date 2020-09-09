@@ -30,7 +30,7 @@ class CreateCommentsTable extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->unsignedBigInteger('product_id')->nullable();
+            $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')
                 ->references('id')
                 ->on('products')
@@ -39,6 +39,7 @@ class CreateCommentsTable extends Migration
 
             $table->text('body');
             $table->boolean('status')->default(false);
+            $table->boolean('is_show')->default(false);
 
             $table->timestamps();
         });
