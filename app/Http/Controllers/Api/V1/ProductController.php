@@ -64,42 +64,20 @@ class ProductController extends Controller
      */
     public function upload(ImageRequest $request, Product $product)
     {
-        // $images = json_decode($_POST['images']);
-        if($request->hasFile('images') )
+        if($request->images )
         {
-            $images = $request->file('images');
+            $images = $request->images;
             foreach ($images as $image) {
                 
                 $file = $this->upload_image($image);
                 $product->images()->create(['image' => $file]);
             }
-            // $images = Collection::wrap( $request->file('images') );
-            // return $images;
-            // $images->each( function($image) use($product) {
 
-            // }); 
-            
             return response([
                 'data' => 'تصاویر با موفقیت آپلود شدند',
                 'status' => 'success'
             ]);
         }
-
-        // if($request->hasFile('images') )
-        // {
-        //     $images =  $request->file('images');
-        //     foreach ($images as $image) {
-                
-        //         $file = $this->upload_image($image);
-        //         // return $file;
-        //         $product->images()->create(['image' => $file]);
-        //     }
-            
-        //     return response([
-        //         'data' => 'تصاویر با موفقیت آپلود شدند',
-        //         'status' => 'success'
-        //     ]);
-        // }
     }
 
     /**
@@ -151,9 +129,9 @@ class ProductController extends Controller
      */
     public function updateUpload(ImageRequest $request, Product $product)
     {
-        if($request->hasFile('images'))
+        if($request->images)
         {
-            $images = $request->file('images');
+            $images = $request->images;
             foreach ($images as $image) {
                 
                 $file = $this->upload_image($image);
@@ -188,10 +166,10 @@ class ProductController extends Controller
         ];
     }
 
-    public function multiDelete(Request $request)
+    public function multiDelete(Product $product)
     {
-        return $request;
-        foreach ($request as $key ) {
+        $id = explode(',', $product);
+        foreach ($id as $key ) {
             $id = $key->id;
             DB::table('products')->where('id', $id)->delete();
         }
