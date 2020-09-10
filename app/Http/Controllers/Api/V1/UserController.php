@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\MultiDeleteUser\MultiDeleteUserRequest;
 use App\Http\Requests\V1\User\UserRequest;
 use App\Http\Resources\Api\V1\User\User as UserResource;
 use App\Http\Resources\Api\V1\User\UserCollection;
@@ -127,7 +128,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function multiDelete(MultiDeleteRequest $request)
+    public function multiDelete(MultiDeleteUserRequest $request)
     {
         $ids = $request->ids;
         DB::table('users')->whereIn('id', explode(',', $ids))->delete();
