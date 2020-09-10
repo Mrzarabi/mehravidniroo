@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Images\ImageRequest;
+use App\Http\Requests\V1\MultiDeleteProduct\MultiDeleteProductRequest;
 use App\Http\Requests\V1\Product\ProductRequest;
 use App\Http\Resources\Api\V1\Product\Product as ProductResource;
 use App\Http\Resources\Api\V1\Product\ProductCollection;
@@ -12,6 +13,7 @@ use App\Models\Product;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -184,5 +186,11 @@ class ProductController extends Controller
             'data' => 'محصول با موفقیت حذف شد',
             'status' => 'success'
         ];
+    }
+
+    public function multiDelete(MultiDeleteProductRequest $request)
+    {
+        $ids = $request->ids;
+        DB::table('products')->whereIn('id', explode(',', $ids))->delete();
     }
 }
