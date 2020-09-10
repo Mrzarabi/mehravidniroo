@@ -188,8 +188,9 @@ class ProductController extends Controller
         ];
     }
 
-    public function multiDelete(MultiDeleteProductRequest $request)
+    public function multiDelete(Request $request)
     {
+        return $request;
         $ids = $request->id;
         DB::table('products')->whereIn('id', explode(',', $ids))->delete();
     }
