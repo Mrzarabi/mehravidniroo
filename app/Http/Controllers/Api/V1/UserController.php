@@ -9,6 +9,7 @@ use App\Http\Resources\Api\V1\User\UserCollection;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
@@ -118,13 +119,17 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        foreach ($user as $key ) {
-            $key->delete();
-        }
+        $user->delete();
 
         return response([
             'data' => 'کاربران مورد نظر با موفقیت حذف شد',
             'status' => 'success'
         ]);
+    }
+
+    public function multiDelete(MultiDeleteRequest $request)
+    {
+        $ids = $request->ids;
+        DB::table('users')->whereIn('id', explode(',', $ids))->delete();
     }
 }
