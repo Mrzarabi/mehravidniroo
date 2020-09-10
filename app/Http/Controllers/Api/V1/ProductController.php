@@ -190,7 +190,7 @@ class ProductController extends Controller
 
     public function multiDelete(MultiDeleteProductRequest $request)
     {
-        $ids = $request->ids;
+        $ids = $request->id;
         DB::table('products')->whereIn('id', explode(',', $ids))->delete();
     }
 }
