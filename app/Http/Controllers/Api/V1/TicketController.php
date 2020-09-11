@@ -18,7 +18,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $tickets = Ticket::paginate(10)->get();
+        $tickets = Ticket::where('status', false)->paginate(10);
         return new TicketCollection($tickets);
     }
 
@@ -58,14 +58,16 @@ class TicketController extends Controller
      */
     public function sendTicket(TicketRequest $request)
     {
-        $ticket = new Ticket();
         if($request->hasFile('image')) {
             $image = $this->upload_image($request->file('image'));
-        } 
-        $ticket->create( array_merge($request->all(), [
-            'image' => $image
-            ]
-        ));
+            
+            auth()->user()->tickets()->create( array_merge($request->all(), [
+                'image' => $image
+                ]
+            ));
+        } else {
+            auth()->user()->tickets()->create( array_merge($request->all() ));
+        }
 
         return response([
             'data' => 'تیکت شما با موفقیت ارسال شد',
