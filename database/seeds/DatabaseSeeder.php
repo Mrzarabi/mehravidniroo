@@ -4,6 +4,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Product;
+use App\Models\Ticket;
 use App\User;
 use Illuminate\Database\Seeder;
 
@@ -45,12 +46,19 @@ class DatabaseSeeder extends Seeder
             });
         });
 
-        // $categories->each(function($category) use($user){
-        //     $category->products()->saveMany(
-        //         factory(Product::class, rand(0,5))
-        //             ->create(['user_id' => $user->id])
-        //     );
-        // });
-        // $brands = factory(Brand::class, 10)->create();
+        $users = factory(User::class, 5)->create();
+        $users->each( function($user) {
+            $tickets = $user->tickets()->saveMany(
+                factory(Ticket::class, rand(3, 5))->make()
+            );
+            $tickets->each( function($ticket) use($user) {
+                $ticket->tickets()->saveMany(
+                    factory(Ticket::class, rand(2, 5))->make(
+                        ['user_id' => $user->id]
+                    )
+                );
+            });
+        });
+
     }
 }
