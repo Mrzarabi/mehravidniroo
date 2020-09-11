@@ -28,12 +28,17 @@ class TicketRequest extends FormRequest
             'email' => 'required|string|email|max:255',
             'title' => 'required|string|max:255',
             'body' => 'required|string',
-            'status' => 'required|min:0|max:3|integer',
             'phone_number' => 'nullable|regex:/^(\+98|0)?\d{10}$/',
             
             'image'          => [
                 'nullable', 'image', 'mimes:jpeg,jpg,png,gif',
             ],
+
+            /**
+             * Relations
+             */
+
+            'tickets.*' => 'nullable|integer|exists:tickets,id',
         ];
     }
 }
