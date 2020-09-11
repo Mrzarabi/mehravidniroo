@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\Api\V1\User;
 
+use App\Http\Resources\Api\V1\Ticket\TicketCollection;
+use App\Models\Ticket;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 
@@ -25,6 +27,7 @@ class User extends JsonResource
             'national_code'   => $this->national_code,
             'email' => $this->email,
             'api_token' => $this->api_token,
+            'tickets' => new TicketCollection(Ticket::where('user_id', $this->id)->get()),
         ];
     }
 }
