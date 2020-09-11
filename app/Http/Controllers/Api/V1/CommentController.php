@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Comment\CommentRequest;
+use App\Http\Requests\V1\MultiDeleteComment\MultiDeleteCommentRequest;
 use App\Http\Resources\Api\V1\Comment\CommentCollection;
 use App\Http\Resources\Api\V1\Comment\Comment as CommentResource;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
 {
@@ -128,6 +130,25 @@ class CommentController extends Controller
         ]);
         return response([
             'data' => 'تغییرات مورد نظر انجام شد',
+            'status' => 'success'
+        ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function multiDelete(MultiDeleteCommentRequest $request)
+    {
+        $ids = explode(',', $request->ids);
+        foreach ($ids as $id) {
+            DB::table('products')->where('id', $id)->delete();
+        }
+
+        return response([
+            'data' => 'نظرات با موفقیت حذف شدند',
             'status' => 'success'
         ]);
     }
