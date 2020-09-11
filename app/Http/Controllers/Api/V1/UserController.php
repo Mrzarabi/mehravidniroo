@@ -130,7 +130,14 @@ class UserController extends Controller
 
     public function multiDelete(MultiDeleteUserRequest $request)
     {
-        $ids = $request->ids;
-        DB::table('users')->whereIn('id', explode(',', $ids))->delete();
+        $ids = explode(',', $request->ids);
+        foreach ($ids as $id) {
+            DB::table('users')->where('id', $id)->delete();
+        }
+
+        return response([
+            'message' => 'کاربران با موفقیت حذف شدند',
+            'status' => 'success'
+        ]);
     }
 }
