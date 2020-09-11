@@ -31,6 +31,7 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
         Route::resource('comment', 'CommentController');
         Route::post('show/{comment}', 'CommentController@isShow');
         Route::post('comment/status/{comment}', 'CommentController@commentStatus');
+        Route::put('multi/delete/comment', 'CommentController@multiDelete');
         
         Route::get('user', 'UserController@index');
         Route::get('user/{user}', 'UserController@show');
@@ -41,5 +42,6 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
         Route::get('ticket/{ticket}', 'TicketController@show');
         Route::delete('ticket/{ticket}', 'TicketController@destroy');
         Route::post('send/ticket', 'TicketController@sendTicket');
+        Route::post('ticket/status/{ticket}', 'TicketController@ticketStatus');
     }); 
 });
