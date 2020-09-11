@@ -24,8 +24,7 @@ class MultiDeleteUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'ids' => 'required|array',
-            'ids.*' => 'required|integer|'
+            'ids.*' => 'required|string|'
         ];
     }
 }
