@@ -155,23 +155,23 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        foreach ($product as $key) {
-            
-            $key->delete();
-        }
-
+        $product->delete();
         return [
             'data' => 'محصول با موفقیت حذف شد',
             'status' => 'success'
         ];
     }
 
-    public function multiDelete(Product $product)
+    public function multiDelete(MultiDeleteProductRequest $request)
     {
-        $id = explode(',', $product);
-        foreach ($id as $key ) {
-            $id = $key->id;
+        $ids = explode(',', $request->ids);
+        foreach ($ids as $id) {
             DB::table('products')->where('id', $id)->delete();
         }
+
+        return response([
+            'data' => 'محصولات با موفقیت حذف شدند',
+            'status' => 'success'
+        ]);
     }
 }
