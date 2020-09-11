@@ -5,6 +5,7 @@ namespace App;
 use App\Models\Article;
 use App\Models\Comment;
 use App\Models\Product;
+use App\Models\Ticket;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -109,5 +110,12 @@ class User extends Authenticatable
      */
     public function comments() {
         return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * Each User can has many comments
+     */
+    public function tickets() {
+        return $this->hasMany(Ticket::class);
     }
 }
