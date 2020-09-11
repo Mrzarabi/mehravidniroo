@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
@@ -12,6 +13,7 @@ class Ticket extends Model
      * @var array
      */
     protected $fillable = [
+        'ticket_id',
         'name',
         'email',
         'status',
@@ -40,4 +42,28 @@ class Ticket extends Model
     /**
      * Relations
      */
+
+    /**
+     * Each Category can has many Children
+     */
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Each commet can has a parent.
+     */
+    public function parent()
+    {
+        return $this->belongsTo(Ticket::class);
+    }
+
+    /**
+     * Each Ticket can has many children
+     */
+    public function tickets()
+    {
+        return $this->hasOne(Ticket::class);
+    }
+
 }
