@@ -3,7 +3,9 @@
 namespace App\Http\Resources\Api\V1\Product;
 
 use App\Http\Requests\V1\Images\ImageRequest;
+use App\Http\Resources\Api\V1\Comment\CommentCollection;
 use App\Http\Resources\Api\V1\Image\ImageCollection;
+use App\Models\Comment;
 use App\Models\Image;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -28,6 +30,7 @@ class Product extends JsonResource
             'c_price' => $this->c_price,
             'inventory' => $this->inventory,
             'images' => new ImageCollection(Image::where('product_id', $this->id)->get()),
+            'comments' => new CommentCollection(Comment::where('product_id', $this->id)->get()),
         ];
     }
 }
