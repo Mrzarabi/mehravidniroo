@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\V1\Ticket;
 
+use App\Models\Ticket;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class TicketCollection extends ResourceCollection
@@ -24,6 +25,7 @@ class TicketCollection extends ResourceCollection
                     'phone_number' => $item->phone_number,
                     'status' => $item->stauts,
                     'title' => $item->title,
+                    'answer' => new TicketCollection(Ticket::where('ticket_id', $item->id)->get())
                 ];
             })
         ];
