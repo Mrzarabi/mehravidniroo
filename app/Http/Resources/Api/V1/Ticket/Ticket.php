@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\V1\Ticket;
 
+use App\Models\Ticket as ModelsTicket;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Ticket extends JsonResource
@@ -22,6 +23,7 @@ class Ticket extends JsonResource
             'email' => $this->email,
             'phone_number' => $this->phone_number,
             'status' => $this->stauts,
+            'answer' => new TicketCollection(ModelsTicket::where('ticket_id', $this->id)->get())
         ];
     }
 }
