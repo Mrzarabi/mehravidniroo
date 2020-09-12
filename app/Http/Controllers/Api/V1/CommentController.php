@@ -20,7 +20,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        $comments = Comment::where('status', false)->get();
+        $comments = Comment::where('status', false)->paginate(10);
         return new CommentCollection($comments);
     }
 
