@@ -95,7 +95,6 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
-        return 'fuck';
         if($request->hasFile('avatar')) {
             $image = $this->upload_image($request->file('avatar'));
         } else {
