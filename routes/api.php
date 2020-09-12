@@ -19,6 +19,7 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
 
     Route::post('login', 'UserController@login');
     Route::post('register', 'UserController@register');
+    // Route::get('category/search/{query?}', 'CategoryController@search');
     
     Route::middleware(['auth:api'])->group( function() {
         Route::resource('category', 'CategoryController');
@@ -29,7 +30,7 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
         Route::post('update/upload/{product}', 'ProductController@updateUpload');
         
         Route::resource('comment', 'CommentController');
-        Route::post('show/{comment}', 'CommentController@isShow');
+        Route::post('comment/show/{comment}', 'CommentController@isShow');
         Route::post('comment/status/{comment}', 'CommentController@commentStatus');
         Route::put('multi/delete/comment', 'CommentController@multiDelete');
         
@@ -43,5 +44,6 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
         Route::delete('ticket/{ticket}', 'TicketController@destroy');
         Route::post('send/ticket', 'TicketController@sendTicket');
         Route::post('ticket/status/{ticket}', 'TicketController@ticketStatus');
+
     }); 
 });
