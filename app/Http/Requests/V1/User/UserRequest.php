@@ -31,9 +31,12 @@ class UserRequest extends FormRequest
             'name' => 'nullable|string|max:255',
             'family' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:255',
-            'phone_number' => 'nullable|regex:/^09[0-9]{9}$/',
             'national_code' => 'nullable|regex:/^[0-9]{10}$/',
 
+            'phone_number' => ['nullable', 
+                Rule::unique('users')->ignore(request()->route()->parameters['user']), 
+                'regex:/^09[0-9]{9}$/'
+            ],
             'email' => ['required', 
                 Rule::unique('users')->ignore(request()->route()->parameters['user']), 
                 'string', 'email', 'max:255'
