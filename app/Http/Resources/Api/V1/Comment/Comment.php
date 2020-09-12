@@ -18,7 +18,9 @@ class Comment extends JsonResource
             'id'    => $this->id,
             'body' => $this->body,
             'status' => $this->status,
-            'is_show' => $this->show
+            'is_show' => $this->show,
+            'writter' => $this->user->name . " " . $this->user->family,
+            'time' => jdate($this->created_at)->format('%B %d، %Y'),
         ];
     }
 }

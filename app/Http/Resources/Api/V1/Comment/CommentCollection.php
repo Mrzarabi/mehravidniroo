@@ -20,7 +20,8 @@ class CommentCollection extends ResourceCollection
                     'id' => $item->id,
                     'body' => $item->body,
                     'children' => new CommentCollection( $item->comments ),
-                    'writter' => $item->user->name . $item->user->family,
+                    'time' => jdate($item->created_at)->format('%B %d، %Y'),
+                    'writter' => $item->user->name . " " .  $item->user->family,
                     // 'is_show' => $item->is_show,
                     // 'status' => $item->status 
                 ];
