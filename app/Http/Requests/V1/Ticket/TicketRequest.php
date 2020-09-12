@@ -28,7 +28,7 @@ class TicketRequest extends FormRequest
             'email' => 'required|string|email|max:255',
             'title' => 'required|string|max:255',
             'body' => 'required|string',
-            'phone_number' => 'nullable|regex:/^(\+98|0)?\d{10}$/',
+            'phone_number' => 'nullable|regex:/^09[0-9]{9}$/',
             
             'image'          => [
                 'nullable', 'image', 'mimes:jpeg,jpg,png,gif',
