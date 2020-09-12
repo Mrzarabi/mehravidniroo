@@ -23,6 +23,7 @@ class Ticket extends JsonResource
             'email' => $this->email,
             'phone_number' => $this->phone_number,
             'status' => $this->stauts,
+            'time' => jdate($this->created_at)->format('%B %d، %Y'),
             'answer' => new TicketCollection(ModelsTicket::where('ticket_id', $this->id)->get())
         ];
     }

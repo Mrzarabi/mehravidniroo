@@ -25,6 +25,7 @@ class TicketCollection extends ResourceCollection
                     'phone_number' => $item->phone_number,
                     'status' => $item->stauts,
                     'title' => $item->title,
+                    'time' => jdate($item->created_at)->format('%B %d، %Y'),
                     'answer' => new TicketCollection(Ticket::where('ticket_id', $item->id)->get())
                 ];
             })
