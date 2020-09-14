@@ -20,6 +20,8 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::where('category_id', null)->get();
+            // ->search( request('query') )->latest()->paginate(10);
+
         return new CategoryCollection($categories);
     }
 
@@ -67,7 +69,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        // $categories = Category::paginate(5);
+        // $    categories = Category::paginate(5);
         // return new CategoryCollection($categories);
         
         return new CategoryResource($category);
@@ -123,5 +125,12 @@ class CategoryController extends Controller
             'data' => 'دسته بندی با موفقیت حذف شد',
             'status' => 'success'
         ]);
+    }
+
+    public function search($query = null)
+    {
+        // $resualt = Category::where($query)->get();
+        // $resualt->latest()->paginate(10);
+        // return $resualt;
     }
 }

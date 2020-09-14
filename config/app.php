@@ -162,6 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Ybazli\Faker\FakerServiceProvider::class,
+        // Kyslik\LaravelFilterable\FilterableServiceProvider::class,
 
         /*
          * Package Service Providers...

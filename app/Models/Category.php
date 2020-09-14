@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Category extends Model
 {
+    use SearchableTrait;
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -25,6 +29,27 @@ class Category extends Model
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+    ];
+
+     /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        /**
+         * Columns and their priority in search results.
+         * Columns with higher values are more important.
+         * Columns with equal values have equal importance.
+         *
+         * @var array
+         */
+        'columns' => [
+            'categories.title' => 10,
+        ],
+        // 'joins' => [
+        //     'categories' => ['categories.id','categories.category_id'],
+        // ],
     ];
 
     /**
