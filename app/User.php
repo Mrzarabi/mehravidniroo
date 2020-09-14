@@ -14,7 +14,8 @@ use Nicolaslopezj\Searchable\SearchableTrait;
 
 class User extends Authenticatable
 {
-    use Notifiable, SearchableTrait;
+    // use Notifiable, SearchableTrait;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.

@@ -7,7 +7,7 @@ use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Category extends Model
 {
-    use SearchableTrait;
+    // use SearchableTrait;
 
 
     /**
