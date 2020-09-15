@@ -180,4 +180,10 @@ class ProductController extends Controller
             'status' => 'success'
         ]);
     }
+
+    public function search($query = null)
+    {
+        $resualt = Product::search( $query );
+        return $resualt->latest()->paginate(10);
+    }
 }
