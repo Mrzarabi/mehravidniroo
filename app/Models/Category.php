@@ -7,7 +7,7 @@ use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Category extends Model
 {
-    // use SearchableTrait;
+    use SearchableTrait;
 
 
     /**
@@ -47,9 +47,6 @@ class Category extends Model
         'columns' => [
             'categories.title' => 10,
         ],
-        // 'joins' => [
-        //     'categories' => ['categories.id','categories.category_id'],
-        // ],
     ];
 
     /**
