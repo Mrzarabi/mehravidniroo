@@ -146,4 +146,10 @@ class UserController extends Controller
             'status' => 'success'
         ]);
     }
+
+    public function search($query = null)
+    {
+        $resualt = User::search( $query );
+        return $resualt->latest()->paginate(10);
+    }
 }
