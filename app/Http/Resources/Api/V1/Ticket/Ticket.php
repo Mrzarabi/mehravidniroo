@@ -17,11 +17,12 @@ class Ticket extends JsonResource
     {
         return [
             'id'    => $this->id,
-            'title' => $this->title,
-            'image' => $this->image,
             'name' => $this->name,
             'email' => $this->email,
             'phone_number' => $this->phone_number,
+            'image' => $this->image,
+            'title' => $this->title,
+            'body' => $this->body,
             'status' => $this->stauts,
             'time' => jdate($this->created_at)->format('%B %d، %Y'),
             'answer' => new TicketCollection(ModelsTicket::where('ticket_id', $this->id)->get())
