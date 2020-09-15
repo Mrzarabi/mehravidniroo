@@ -149,7 +149,7 @@ class UserController extends Controller
 
     public function search($query = null)
     {
-        $resualt = User::search( $query );
-        return $resualt->latest()->paginate(10);
+        $resualt = User::search( $query )->latest()->paginate(10);
+        return new UserCollection($resualt);
     }
 }
