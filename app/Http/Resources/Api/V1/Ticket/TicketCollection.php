@@ -19,12 +19,13 @@ class TicketCollection extends ResourceCollection
             'data' => $this->collection->map( function($item) {
                 return [
                     'id'    => $item->id,
-                    'image' => $item->image,
                     'name' => $item->name,
                     'email' => $item->email,
                     'phone_number' => $item->phone_number,
-                    'status' => $item->stauts,
+                    'image' => $item->image,
                     'title' => $item->title,
+                    'body' => $item->body,
+                    'status' => $item->stauts,
                     'time' => jdate($item->created_at)->format('%B %d، %Y'),
                     'answer' => new TicketCollection(Ticket::where('ticket_id', $item->id)->get())
                 ];
