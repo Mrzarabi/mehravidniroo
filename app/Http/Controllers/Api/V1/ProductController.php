@@ -183,7 +183,7 @@ class ProductController extends Controller
 
     public function search($query = null)
     {
-        $resualt = Product::search( $query );
-        return $resualt->latest()->paginate(10);
+        $resualt = Product::search( $query )->latest()->paginate(10);
+        return new ProductCollection($resualt);
     }
 }
