@@ -14,8 +14,7 @@ use Nicolaslopezj\Searchable\SearchableTrait;
 
 class User extends Authenticatable
 {
-    // use Notifiable, SearchableTrait;
-    use Notifiable;
+    use Notifiable, SearchableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -52,6 +51,22 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+    ];
+
+    /**
+     * Searchable rules.
+     *
+     * Columns and their priority in search results.
+     * Columns with higher values are more important.
+     * Columns with equal values have equal importance.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        'columns' => [
+            'users.name' => 10,
+            'users.family'  => 10,
+        ],
     ];
 
     /**
