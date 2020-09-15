@@ -19,7 +19,10 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
 
     Route::post('login', 'UserController@login');
     Route::post('register', 'UserController@register');
-    // Route::get('category/search/{query?}', 'CategoryController@search');
+    
+    Route::get('category/search/{query?}', 'CategoryController@search');
+    Route::get('user/search/{query?}', 'UserController@search');
+    Route::get('product/search/{query?}', 'ProductController@search');
     
     Route::middleware(['auth:api'])->group( function() {
         Route::resource('category', 'CategoryController');
