@@ -129,7 +129,7 @@ class CategoryController extends Controller
 
     public function search($query = null)
     {
-        $resualt = Category::search($query);
-        return $resualt->latest()->paginate(10);
+        $resualt = Category::search( $query )->latest()->paginate(10);
+        return new CategoryCollection( $resualt );
     }
 }
