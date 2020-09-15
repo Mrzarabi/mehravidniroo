@@ -4,9 +4,12 @@ namespace App\Models;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Product extends Model
 {
+    use SearchableTrait;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -29,6 +32,19 @@ class Product extends Model
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+    ];
+
+    protected $searchable = [
+        /**
+         * Columns and their priority in search results.
+         * Columns with higher values are more important.
+         * Columns with equal values have equal importance.
+         *
+         * @var array
+         */
+        'columns' => [
+            'products.title' => 10,
+        ],
     ];
 
     /**
