@@ -19,10 +19,12 @@ class Product extends JsonResource
      */
     public function toArray($request)
     {
+        
         // return Image::where('product_id', $this->id)->get();
         return [
             'id'    => $this->id,
-            'category' => $this->category ? $this->category->title : '',
+            // 'category' => $this->category ? $this->category->title : '',
+            'category' => $this->id,
             'title' => $this->title,
             'desc' => $this->desc,
             'body' => $this->body,
