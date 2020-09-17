@@ -68,12 +68,18 @@ class TicketController extends Controller
             if($request->hasFile('image')) {
                 $image = $this->upload_image($request->file('image'));
                 
-                auth()->user()->tickets()->create( array_merge($request->all(), [
+                $ticket = auth()->user()->tickets()->create( array_merge($request->all(), [
                     'image' => $image
                     ]
                 ));
             } else {
-                auth()->user()->tickets()->create( array_merge($request->all() ));
+                $ticket = auth()->user()->tickets()->create( array_merge($request->all() ));
+            }
+            
+            if( auth()->user()->hasRole('owner') ) {
+                $ticket->update([
+                    'status' => true
+                ]);
             }
 
             return response([
