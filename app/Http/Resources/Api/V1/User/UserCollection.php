@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\Api\V1\User;
 
+use App\Http\Resources\Api\V1\Role\RoleCollection;
+use App\User;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class UserCollection extends ResourceCollection
@@ -25,6 +27,7 @@ class UserCollection extends ResourceCollection
                     'phone_number'   => $item->phone_number,
                     'national_code'   => $item->national_code,
                     'email' => $item->email,
+                    'roles' => new RoleCollection($item->roles)
                 ];
             })
         ];
