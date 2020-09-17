@@ -18,8 +18,10 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $tickets = Ticket::where('status', false)->paginate(10);
-        return new TicketCollection($tickets);
+        if( auth()->user()->hasRole('owner') ) {
+            $tickets = Ticket::where('status', false)->latest()->paginate(10);
+            return new TicketCollection($tickets);
+        }
     }
 
     /**
@@ -30,7 +32,9 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        return new TicketResource($ticket);
+        if( auth()->user()->hasRole('owner') ) {
+            return new TicketResource($ticket);
+        }
     }
 
     /**
@@ -41,12 +45,14 @@ class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
-        $ticket->delete();
+        if( auth()->user()->hasRole('owner') ) {
+            $ticket->delete();
 
-        return response([
-            'data' => 'تیکت با موفقیت حذف شد',
-            'status' => 'success'
-        ]);
+            return response([
+                'data' => 'تیکت با موفقیت حذف شد',
+                'status' => 'success'
+            ]);
+        }
     }
 
     /**
@@ -58,21 +64,23 @@ class TicketController extends Controller
      */
     public function sendTicket(TicketRequest $request)
     {
-        if($request->hasFile('image')) {
-            $image = $this->upload_image($request->file('image'));
-            
-            auth()->user()->tickets()->create( array_merge($request->all(), [
-                'image' => $image
-                ]
-            ));
-        } else {
-            auth()->user()->tickets()->create( array_merge($request->all() ));
-        }
+        if( auth()->user()->hasRole(['owner', 'user']) ) {
+            if($request->hasFile('image')) {
+                $image = $this->upload_image($request->file('image'));
+                
+                auth()->user()->tickets()->create( array_merge($request->all(), [
+                    'image' => $image
+                    ]
+                ));
+            } else {
+                auth()->user()->tickets()->create( array_merge($request->all() ));
+            }
 
-        return response([
-            'data' => 'تیکت شما با موفقیت ارسال شد',
-            'status' => 'success'
-        ]);
+            return response([
+                'data' => 'تیکت شما با موفقیت ارسال شد',
+                'status' => 'success'
+            ]);
+        }
     }
 
     /**
@@ -83,13 +91,15 @@ class TicketController extends Controller
      */
     public function ticketStatus(Ticket $ticket)
     {
-        $ticket->update([
-            'status' => true
-        ]);
+        if( auth()->user()->hasRole('owner') ) {
+            $ticket->update([
+                'status' => true
+            ]);
 
-        return response([
-            'data' => "تیکت {$ticket->title} با موفقیت تایید شد",
-            'status' => 'success'
-        ]);
+            return response([
+                'data' => "تیکت {$ticket->title} با موفقیت تایید شد",
+                'status' => 'success'
+            ]);
+        }
     }
 }

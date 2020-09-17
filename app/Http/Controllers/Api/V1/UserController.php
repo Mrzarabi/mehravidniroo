@@ -48,7 +48,6 @@ class UserController extends Controller
      */
     public function register(Request $request) 
     {
-
         $validData = $this->validate($request, [
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
@@ -70,8 +69,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(10);
-        return new UserCollection($users);
+        $user = auth()->user();
+        if( $user->hasRole('owner') ) {
+            $users = User::latest()->paginate(10);
+            return new UserCollection($users);
+        }
     }
 
     /**
@@ -82,7 +84,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return new UserResource($user);
+        if( auth()->user()->hasRole(['owner', 'user']) ) {
+            return new UserResource($user);
+        }
     }
 
 
@@ -95,21 +99,24 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
-        if($request->hasFile('avatar')) {
-            $image = $this->upload_image($request->file('avatar'));
-        } else {
-            $image = $user->avatar;
+        if( auth()->user()->hasRole(['owner', 'user']) ) {
+            
+            if($request->hasFile('avatar')) {
+                $image = $this->upload_image($request->file('avatar'));
+            } else {
+                $image = $user->avatar;
+            }
+    
+            $user->update(array_merge($request->all(), [
+                'avatar' => $image
+                ] 
+            ));
+    
+            return response([
+                'data' => 'اطلاعات شما با موفقیت به روز رسانی شد',
+                'status' => 'success'
+            ]);
         }
-
-        $user->update(array_merge($request->all(), [
-            'avatar' => $image
-            ] 
-        ));
-
-        return response([
-            'data' => 'اطلاعات شما با موفقیت به روز رسانی شد',
-            'status' => 'success'
-        ]);
     }
 
     /**
@@ -120,12 +127,14 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
+        if( auth()->user()->hasRole('owner') ) {
+            $user->delete();
 
-        return response([
-            'data' => 'کاربران مورد نظر با موفقیت حذف شد',
-            'status' => 'success'
-        ]);
+            return response([
+                'data' => 'کاربران مورد نظر با موفقیت حذف شد',
+                'status' => 'success'
+            ]);
+        }
     }
 
     /**
@@ -136,17 +145,24 @@ class UserController extends Controller
      */
     public function multiDelete(MultiDeleteUserRequest $request)
     {
-        $ids = explode(',', $request->ids);
-        foreach ($ids as $id) {
-            DB::table('users')->where('id', $id)->delete();
-        }
+        if( auth()->user()->hasRole('owner') ) {
+            $ids = explode(',', $request->ids);
+            foreach ($ids as $id) {
+                DB::table('users')->where('id', $id)->delete();
+            }
 
-        return response([
-            'message' => 'کاربران با موفقیت حذف شدند',
-            'status' => 'success'
-        ]);
+            return response([
+                'message' => 'کاربران با موفقیت حذف شدند',
+                'status' => 'success'
+            ]);
+        }
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function search($query = null)
     {
         $resualt = User::search( $query )->latest()->paginate(10);

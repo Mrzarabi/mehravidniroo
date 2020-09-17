@@ -20,8 +20,10 @@ class CommentController extends Controller
      */
     public function index()
     {
-        $comments = Comment::where('status', false)->paginate(10);
-        return new CommentCollection($comments);
+        if( auth()->user()->hasRole('owner') ) {
+            $comments = Comment::where('status', false)->latest()->paginate(10);
+            return new CommentCollection($comments);
+        }
     }
 
     /**
@@ -42,12 +44,14 @@ class CommentController extends Controller
      */
     public function store(CommentRequest $request)
     {
-        auth()->user()->comments()->create( $request->all() );
+        if( auth()->user()->hasRole(['owner', 'user']) ) {
+            auth()->user()->comments()->create( $request->all() );
 
-        return response([
-            'date' => 'نظر شما با موفقیت ثبت گردید',
-            'status' => 'success'
-        ]);
+            return response([
+                'date' => 'نظر شما با موفقیت ثبت گردید',
+                'status' => 'success'
+            ]);
+        }
     }
 
     /**
@@ -58,7 +62,9 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        return new CommentResource($comment);
+        if( auth()->user()->hasRole('owner') ) {
+            return new CommentResource($comment);
+        }
     }
 
     /**
@@ -92,12 +98,14 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        $comment->delete();
+        if( auth()->user()->hasRole('owner') ) {
+            $comment->delete();
 
-        return response([
-            'data' => 'نظر شما با موفقیت حذف شد',
-            'status' => 'success'
-        ]);
+            return response([
+                'data' => 'نظر شما با موفقیت حذف شد',
+                'status' => 'success'
+            ]);
+        }
     }
 
     /**
@@ -108,13 +116,15 @@ class CommentController extends Controller
      */
     public function isShow(Comment $comment) 
     {
-        $comment->update([
-            'is_show' => true
-        ]);
-        return response([
-            'data' => 'تغییرات مورد نظر انجام شد',
-            'status' => 'success'
-        ]);
+        if( auth()->user()->hasRole('owner') ) {
+            $comment->update([
+                'is_show' => true
+            ]);
+            return response([
+                'data' => 'تغییرات مورد نظر انجام شد',
+                'status' => 'success'
+            ]);
+        }
     }
 
     /**
@@ -125,13 +135,15 @@ class CommentController extends Controller
      */
     public function commentStatus(Comment $comment) 
     {
-        $comment->update([
-            'status' => true
-        ]);
-        return response([
-            'data' => 'تغییرات مورد نظر انجام شد',
-            'status' => 'success'
-        ]);
+        if( auth()->user()->hasRole('owner') ) {
+            $comment->update([
+                'status' => true
+            ]);
+            return response([
+                'data' => 'تغییرات مورد نظر انجام شد',
+                'status' => 'success'
+            ]);
+        }
     }
 
     /**
@@ -142,14 +154,16 @@ class CommentController extends Controller
      */
     public function multiDelete(MultiDeleteCommentRequest $request)
     {
-        $ids = explode(',', $request->ids);
-        foreach ($ids as $id) {
-            DB::table('products')->where('id', $id)->delete();
-        }
+        if( auth()->user()->hasRole('owner') ) {
+            $ids = explode(',', $request->ids);
+            foreach ($ids as $id) {
+                DB::table('products')->where('id', $id)->delete();
+            }
 
-        return response([
-            'data' => 'نظرات با موفقیت حذف شدند',
-            'status' => 'success'
-        ]);
+            return response([
+                'data' => 'نظرات با موفقیت حذف شدند',
+                'status' => 'success'
+            ]);
+        }
     }
 }

@@ -24,7 +24,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(9);
+        $products = Product::latest()->paginate(9);
         return new ProductCollection($products);
     }
 
@@ -46,14 +46,16 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        $product = auth()->user()->products()->create( array_merge( $request->all()) );
-        $post = new ProductResource($product);
+        if( auth()->user()->hasRole('owner') ) {
+            $product = auth()->user()->products()->create( array_merge( $request->all()) );
+            $post = new ProductResource($product);
 
-        return response([
-            'data' => $post->id,
-            'message' => 'محصول با موفقیت ثبت گردید', 
-            'status' => 'success'
-        ]);
+            return response([
+                'data' => $post->id,
+                'message' => 'محصول با موفقیت ثبت گردید', 
+                'status' => 'success'
+            ]);
+        }
     }
 
     /**
@@ -64,19 +66,21 @@ class ProductController extends Controller
      */
     public function upload(ImageRequest $request, Product $product)
     {
-        if($request->images )
-        {
-            $images = $request->images;
-            foreach ($images as $image) {
-                
-                $file = $this->upload_image($image);
-                $product->images()->create(['image' => $file]);
-            }
+        if( auth()->user()->hasRole('owner') ) {
+            if($request->images )
+            {
+                $images = $request->images;
+                foreach ($images as $image) {
+                    
+                    $file = $this->upload_image($image);
+                    $product->images()->create(['image' => $file]);
+                }
 
-            return response([
-                'data' => 'تصاویر با موفقیت آپلود شدند',
-                'status' => 'success'
-            ]);
+                return response([
+                    'data' => 'تصاویر با موفقیت آپلود شدند',
+                    'status' => 'success'
+                ]);
+            }
         }
     }
 
@@ -111,14 +115,16 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, Product $product)
     {
-        $product->update($request->all());
-        $post = new ProductResource($product);
+        if( auth()->user()->hasRole('owner') ) {
+            $product->update($request->all());
+            $post = new ProductResource($product);
 
-        return response([
-            'data' => $post->id,
-            'data' => 'محصول مورد نظر با موفقیت به روز رسانی شد',
-            'status' => 'success'
-       ]);
+            return response([
+                'data' => $post->id,
+                'data' => 'محصول مورد نظر با موفقیت به روز رسانی شد',
+                'status' => 'success'
+            ]);
+        }
     }
 
     /**
@@ -129,22 +135,24 @@ class ProductController extends Controller
      */
     public function updateUpload(ImageRequest $request, Product $product)
     {
-        if($request->images)
-        {
-            $images = $request->images;
-            foreach ($images as $image) {
-                
-                $file = $this->upload_image($image);
-                $product->images()->update(['image' => $file]);
+        if( auth()->user()->hasRole('owner') ) {
+            if($request->images)
+            {
+                $images = $request->images;
+                foreach ($images as $image) {
+                    
+                    $file = $this->upload_image($image);
+                    $product->images()->update(['image' => $file]);
+                }
+            } else {
+                $product->images()->update(['image' => $product->images()->image]);
             }
-        } else {
-            $product->images()->update(['image' => $product->images()->image]);
-        }
 
-        return response([
-            'data' => 'تصاویر با موفقیت به روز رسانی شدند',
-            'status' => 'success'
-        ]);
+            return response([
+                'data' => 'تصاویر با موفقیت به روز رسانی شدند',
+                'status' => 'success'
+            ]);
+        }
     }
 
     /**
@@ -155,11 +163,13 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        $product->delete();
-        return [
-            'data' => 'محصول با موفقیت حذف شد',
-            'status' => 'success'
-        ];
+        if( auth()->user()->hasRole('owner') ) {
+            $product->delete();
+            return [
+                'data' => 'محصول با موفقیت حذف شد',
+                'status' => 'success'
+            ];
+        }
     }
 
     /**
@@ -170,17 +180,24 @@ class ProductController extends Controller
      */
     public function multiDelete(MultiDeleteProductRequest $request)
     {
-        $ids = explode(',', $request->ids);
-        foreach ($ids as $id) {
-            DB::table('products')->where('id', $id)->delete();
-        }
+        if( auth()->user()->hasRole('owner') ) {
+            $ids = explode(',', $request->ids);
+            foreach ($ids as $id) {
+                DB::table('products')->where('id', $id)->delete();
+            }
 
-        return response([
-            'data' => 'محصولات با موفقیت حذف شدند',
-            'status' => 'success'
-        ]);
+            return response([
+                'data' => 'محصولات با موفقیت حذف شدند',
+                'status' => 'success'
+            ]);
+        }
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function search($query = null)
     {
         $resualt = Product::search( $query )->latest()->paginate(10);

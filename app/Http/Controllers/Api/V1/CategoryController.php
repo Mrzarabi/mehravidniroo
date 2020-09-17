@@ -20,8 +20,6 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::where('category_id', null)->get();
-            // ->search( request('query') )->latest()->paginate(10);
-
         return new CategoryCollection($categories);
     }
 
@@ -43,22 +41,24 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        $category = new Category;
+        if( auth()->user()->hasRole('owner') ) {
+            $category = new Category;
 
-        if($request->hasFile('image')) {
-            
-            $category->create( array_merge( $request->all(), [
-                'image' => $this->upload_image($request->file('image'))
-            ]  
-            ));
-        } else {
-            $category->create( array_merge( $request->all() ));
+            if($request->hasFile('image')) {
+                
+                $category->create( array_merge( $request->all(), [
+                    'image' => $this->upload_image($request->file('image'))
+                ]  
+                ));
+            } else {
+                $category->create( array_merge( $request->all() ));
+            }
+
+            return response([
+                'data' => 'دسته بندی با موققیت ثبت شد',
+                'status' => 'success'
+            ]);
         }
-
-        return response([
-            'data' => 'دسته بندی با موققیت ثبت شد',
-            'status' => 'success'
-        ]);
     }
 
     /**
@@ -69,9 +69,6 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        // $    categories = Category::paginate(5);
-        // return new CategoryCollection($categories);
-        
         return new CategoryResource($category);
     }
 
@@ -94,21 +91,23 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Category $category)
-    {;
-        if($request->hasFile('image')) {
-            $image = $this->upload_image($request->file('image'));
-        } else {
-            $image = $category->image;
+    {
+        if( auth()->user()->hasRole('owner') ) {
+            if($request->hasFile('image')) {
+                $image = $this->upload_image($request->file('image'));
+            } else {
+                $image = $category->image;
+            }
+            $category->update(array_merge($request->all(), [
+                    'image' => $image
+                ] 
+            ));
+            
+            return response([
+                'data' => 'دسته بندی با موفقیت به روز رسانی شد',
+                'status' => 'success' 
+            ]);
         }
-        $category->update(array_merge($request->all(), [
-                'image' => $image
-            ] 
-        ));
-
-        return response([
-            'data' => 'دسته بندی با موفقیت به روز رسانی شد',
-            'status' => 'success' 
-        ]);
     }
 
     /**
@@ -119,14 +118,21 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
+        if( auth()->user()->hasRole('owner') ) {
+            $category->delete();
 
-        return response([
-            'data' => 'دسته بندی با موفقیت حذف شد',
-            'status' => 'success'
-        ]);
+            return response([
+                'data' => 'دسته بندی با موفقیت حذف شد',
+                'status' => 'success'
+            ]);
+        }
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function search($query = null)
     {
         $resualt = Category::search( $query )->latest()->paginate(10);
