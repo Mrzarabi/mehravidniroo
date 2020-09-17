@@ -24,8 +24,14 @@ class TicketRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
+            'name' => [ auth()->user()->hasRole('owner') 
+                ? ['nullable', 'string', 'max:255'] 
+                : ['required', 'string',' max:255'] ],
+
+            'email' => [ auth()->user()->hasRole('owner') 
+                ? ['nullable', 'string', 'email', 'max:255'] 
+                : ['required', 'string', 'email',' max:255'] ],
+
             'title' => 'required|string|max:255',
             'body' => 'required|string',
             'phone_number' => 'nullable|regex:/^09[0-9]{9}$/',
