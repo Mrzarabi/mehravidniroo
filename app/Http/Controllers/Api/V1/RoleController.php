@@ -18,7 +18,11 @@ class RoleController extends Controller
     public function index()
     {
         if(auth()->user()->hasRole('owner')) {
-            $users = User::whereNotIn('email', ['owner@gmail.com', 'helper@gmail.com'])->latest()->paginate(10);
+            $users = User::with('roles')
+                ->whereNotIn('email', ['owner@gmail.com', 'helper@gmail.com'])
+                ->latest()
+                ->paginate(10);
+
             return new UserCollection($users);
         }
     }
@@ -28,7 +32,7 @@ class RoleController extends Controller
         if(auth()->user()->hasRole('owner')) {
             $user->attachRole('user');
             return response([
-                'data' => "کاربر {$user->name} {$user->family} با موفقیت به کاربران ویژه پیوست",
+                'data' => "کاربر {$user->name} {$user->family} با موفقیت به کاربران ویژه اضافه شد",
                 'status' => 'success'
             ]);
         }
