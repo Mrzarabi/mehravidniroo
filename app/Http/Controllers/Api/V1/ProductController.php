@@ -46,7 +46,7 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        if( auth()->user()->hasRole('owner') ) {
+        if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
             $product = auth()->user()->products()->create( array_merge( $request->all()) );
             $post = new ProductResource($product);
 
@@ -66,7 +66,7 @@ class ProductController extends Controller
      */
     public function upload(ImageRequest $request, Product $product)
     {
-        if( auth()->user()->hasRole('owner') ) {
+        if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
             if($request->images )
             {
                 $images = $request->images;
@@ -115,7 +115,7 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, Product $product)
     {
-        if( auth()->user()->hasRole('owner') ) {
+        if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
             $product->update($request->all());
             $post = new ProductResource($product);
 
@@ -135,7 +135,7 @@ class ProductController extends Controller
      */
     public function updateUpload(ImageRequest $request, Product $product)
     {
-        if( auth()->user()->hasRole('owner') ) {
+        if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
             if($request->images)
             {
                 $images = $request->images;
@@ -163,7 +163,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        if( auth()->user()->hasRole('owner') ) {
+        if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
             $product->delete();
             return [
                 'data' => 'محصول با موفقیت حذف شد',
@@ -180,7 +180,7 @@ class ProductController extends Controller
      */
     public function multiDelete(MultiDeleteProductRequest $request)
     {
-        if( auth()->user()->hasRole('owner') ) {
+        if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
             $ids = explode(',', $request->ids);
             foreach ($ids as $id) {
                 DB::table('products')->where('id', $id)->delete();

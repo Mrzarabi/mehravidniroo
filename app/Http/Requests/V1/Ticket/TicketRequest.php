@@ -24,11 +24,11 @@ class TicketRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [ auth()->user()->hasRole('owner') 
+            'name' => [ auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') 
                 ? ['nullable', 'string', 'max:255'] 
                 : ['required', 'string',' max:255'] ],
 
-            'email' => [ auth()->user()->hasRole('owner') 
+            'email' => [ auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') 
                 ? ['nullable', 'string', 'email', 'max:255'] 
                 : ['required', 'string', 'email',' max:255'] ],
 

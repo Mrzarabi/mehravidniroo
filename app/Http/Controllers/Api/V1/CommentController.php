@@ -20,7 +20,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        if( auth()->user()->hasRole('owner') ) {
+        if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
             $comments = Comment::where('status', false)->latest()->paginate(10);
             return new CommentCollection($comments);
         }
@@ -44,10 +44,10 @@ class CommentController extends Controller
      */
     public function store(CommentRequest $request)
     {
-        if( auth()->user()->hasRole(['owner', 'user']) ) {
+        if( auth()->user()->hasRole(['100e82ba-e1c0-4153-8633-e1bd228f7399', '3362c127-65aa-4950-b14f-2fc86b53ea88']) ) {
             auth()->user()->comments()->create( $request->all() );
 
-            if( auth()->user()->hasRole('owner') ) {
+            if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
                 $ticket->update([
                     'status' => true,
                     'is_show' => true
@@ -69,7 +69,7 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        if( auth()->user()->hasRole('owner') ) {
+        if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
             return new CommentResource($comment);
         }
     }
@@ -105,7 +105,7 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        if( auth()->user()->hasRole('owner') ) {
+        if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
             $comment->delete();
 
             return response([
@@ -123,7 +123,7 @@ class CommentController extends Controller
      */
     public function isShow(Comment $comment) 
     {
-        if( auth()->user()->hasRole('owner') ) {
+        if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
             $comment->update([
                 'is_show' => true
             ]);
@@ -142,7 +142,7 @@ class CommentController extends Controller
      */
     public function commentStatus(Comment $comment) 
     {
-        if( auth()->user()->hasRole('owner') ) {
+        if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
             $comment->update([
                 'status' => true
             ]);
@@ -161,7 +161,7 @@ class CommentController extends Controller
      */
     public function multiDelete(MultiDeleteCommentRequest $request)
     {
-        if( auth()->user()->hasRole('owner') ) {
+        if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
             $ids = explode(',', $request->ids);
             foreach ($ids as $id) {
                 DB::table('products')->where('id', $id)->delete();

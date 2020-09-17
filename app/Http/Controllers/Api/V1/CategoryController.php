@@ -41,7 +41,7 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        if( auth()->user()->hasRole('owner') ) {
+        if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
             $category = new Category;
 
             if($request->hasFile('image')) {
@@ -92,7 +92,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        if( auth()->user()->hasRole('owner') ) {
+        if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
             if($request->hasFile('image')) {
                 $image = $this->upload_image($request->file('image'));
             } else {
@@ -118,7 +118,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        if( auth()->user()->hasRole('owner') ) {
+        if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
             $category->delete();
 
             return response([

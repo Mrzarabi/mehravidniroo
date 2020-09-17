@@ -18,7 +18,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        if( auth()->user()->hasRole('owner') ) {
+        if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
             $tickets = Ticket::where('status', false)->latest()->paginate(10);
             return new TicketCollection($tickets);
         }
@@ -32,7 +32,7 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        if( auth()->user()->hasRole('owner') ) {
+        if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
             return new TicketResource($ticket);
         }
     }
@@ -45,7 +45,7 @@ class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
-        if( auth()->user()->hasRole('owner') ) {
+        if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
             $ticket->delete();
 
             return response([
@@ -64,7 +64,7 @@ class TicketController extends Controller
      */
     public function sendTicket(TicketRequest $request)
     {
-        if( auth()->user()->hasRole(['owner', 'user']) ) {
+        if( auth()->user()->hasRole(['100e82ba-e1c0-4153-8633-e1bd228f7399', '3362c127-65aa-4950-b14f-2fc86b53ea88']) ) {
             if($request->hasFile('image')) {
                 $image = $this->upload_image($request->file('image'));
                 
@@ -75,8 +75,8 @@ class TicketController extends Controller
             } else {
                 $ticket = auth()->user()->tickets()->create( array_merge($request->all() ));
             }
-            
-            if( auth()->user()->hasRole('owner') ) {
+
+            if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
                 $ticket->update([
                     'status' => true
                 ]);
@@ -97,7 +97,7 @@ class TicketController extends Controller
      */
     public function ticketStatus(Ticket $ticket)
     {
-        if( auth()->user()->hasRole('owner') ) {
+        if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
             $ticket->update([
                 'status' => true
             ]);

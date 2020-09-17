@@ -17,7 +17,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->hasRole('owner')) {
+        if(auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399')) {
             $users = User::with('roles')
                 ->whereNotIn('email', ['owner@gmail.com', 'helper@gmail.com'])
                 ->latest()
@@ -29,8 +29,8 @@ class RoleController extends Controller
 
     public function attachRole(User $user) 
     {
-        if(auth()->user()->hasRole('owner')) {
-            $user->attachRole('user');
+        if(auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399')) {
+            $user->attachRole('3362c127-65aa-4950-b14f-2fc86b53ea88');
             return response([
                 'data' => "کاربر {$user->name} {$user->family} با موفقیت به کاربران ویژه اضافه شد",
                 'status' => 'success'
@@ -40,8 +40,8 @@ class RoleController extends Controller
 
     public function detachRole(User $user) 
     {
-        if(auth()->user()->hasRole('owner')) {
-            $user->detachRole('user');
+        if(auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399')) {
+            $user->detachRole('3362c127-65aa-4950-b14f-2fc86b53ea88');
             return response([
                 'data' => "کاربر {$user->name} {$user->family} با موفقیت از کاربران ویژه حذف شد",
                 'status' => 'success'

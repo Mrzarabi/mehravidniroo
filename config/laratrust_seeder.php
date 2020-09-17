@@ -12,7 +12,7 @@ return [
     'truncate_tables' => true,
 
     'roles_structure' => [
-        'owner' => [
+        '100e82ba-e1c0-4153-8633-e1bd228f7399' => [
             'user' => 'r,d',
             'category' => 'c,r,u,d',
             'product' => 'c,r,u,d',
@@ -21,7 +21,7 @@ return [
             'comment' => 'c,r,u,d,a',
         ],
         
-        'user' => [
+        '3362c127-65aa-4950-b14f-2fc86b53ea88' => [
             'user' => 'r,u',
             'category' => 'r',
             'product' => 'r',
@@ -30,7 +30,7 @@ return [
             'comment' => 'c,r',
         ],
         
-        'customer' => [
+        '40dd0ea1-c598-47f7-b138-a8055f0b5c64' => [
             'category' => 'r',
             'product' => 'r',
             'image' => 'r',
@@ -80,19 +80,15 @@ return [
         // 'see-inventory'     => 'مشاهده موجودی',
     ],
     'roles_label' => [
-        'owner' => [
+        '100e82ba-e1c0-4153-8633-e1bd228f7399' => [
             'name' => 'مدیر',
             'description' => 'مالک وبسایت'
         ],
-        'smaat_supporter' => [
-            'name'  => 'پشتیبان',
-            'description' => 'کسی که پشتیبانی این پروژه رو بر عهده داره'
-        ],
-        'user' => [
+        '3362c127-65aa-4950-b14f-2fc86b53ea88' => [
             'name'  => 'مشتریان ویژه',
             'description' => 'مشتریان ویژه این فروشگاه هستند'
         ],
-        'customer' => [
+        '40dd0ea1-c598-47f7-b138-a8055f0b5c64' => [
             'name'  => 'مشتریان عادی',
             'description' => 'مشتریان عادی این فروشگاه هستند'
         ],
