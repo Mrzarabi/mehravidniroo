@@ -47,6 +47,13 @@ class CommentController extends Controller
         if( auth()->user()->hasRole(['owner', 'user']) ) {
             auth()->user()->comments()->create( $request->all() );
 
+            if( auth()->user()->hasRole('owner') ) {
+                $ticket->update([
+                    'status' => true,
+                    'is_show' => true
+                ]);
+            }
+
             return response([
                 'date' => 'نظر شما با موفقیت ثبت گردید',
                 'status' => 'success'
