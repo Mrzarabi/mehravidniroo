@@ -5,16 +5,18 @@ namespace App;
 use App\Models\Article;
 use App\Models\Comment;
 use App\Models\Product;
+use App\Models\Role;
 use App\Models\Ticket;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Nicolaslopezj\Searchable\SearchableTrait;
+use Laratrust\Traits\LaratrustUserTrait;
 
 class User extends Authenticatable
 {
-    use Notifiable, SearchableTrait;
+    use Notifiable, SearchableTrait, LaratrustUserTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -134,5 +136,12 @@ class User extends Authenticatable
      */
     public function tickets() {
         return $this->hasMany(Ticket::class);
+    }
+
+    /**
+     * Each User belongs to one Role
+     */
+    public function role() {
+        return $this->belongsTo(Role::class);
     }
 }
