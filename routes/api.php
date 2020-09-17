@@ -21,10 +21,9 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
     Route::post('register', 'UserController@register');
     
     Route::get('category/search/{query?}', 'CategoryController@search');
-    Route::get('user/search/{query?}', 'UserController@search');
     Route::get('product/search/{query?}', 'ProductController@search');
     
-    Route::middleware(['auth:api'])->group( function() {
+    Route::middleware(['auth:api', 'role:owner'])->group( function() {
         Route::resource('category', 'CategoryController');
         
         Route::resource('product', 'ProductController');
@@ -40,13 +39,42 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
         Route::get('user', 'UserController@index');
         Route::get('user/{user}', 'UserController@show');
         Route::put('user/{user}', 'UserController@update');
+        Route::delete('user/{user}', 'UserController@destroy');
         Route::put('multi/delete/user', 'UserController@multiDelete');
+        Route::get('user/search/{query?}', 'UserController@search');
         
+        Route::resource('role', 'RoleController');
+        Route::post('attach/role/{user}', 'RoleController@attachRole');
+        Route::post('detach/role/{user}', 'RoleController@detachRole');
+
         Route::get('ticket', 'TicketController@index');
         Route::get('ticket/{ticket}', 'TicketController@show');
         Route::delete('ticket/{ticket}', 'TicketController@destroy');
         Route::post('send/ticket', 'TicketController@sendTicket');
         Route::post('ticket/status/{ticket}', 'TicketController@ticketStatus');
 
+    }); 
+
+    Route::middleware(['auth:api', 'role:user'])->group( function() {
+        Route::get('category', 'CategoryController@index');
+        Route::get('category/{category}', 'CategoryController@show');
+        
+        Route::get('product', 'ProductController@index');
+        Route::get('product/{product}', 'ProductController@show');
+
+        Route::post('comment', 'CommentController@store');
+        
+        Route::get('user/{user}', 'UserController@show');
+        Route::put('user/{user}', 'UserController@update');
+        
+        Route::post('send/ticket', 'TicketController@sendTicket');
+    }); 
+
+    Route::middleware(['role:customer'])->group( function() {
+        Route::get('category', 'CategoryController@index');
+        Route::get('category/{category}', 'CategoryController@show');
+        
+        Route::get('product', 'ProductController@index');
+        Route::get('product/{product}', 'ProductController@show');
     }); 
 });
