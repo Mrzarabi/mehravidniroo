@@ -17,6 +17,7 @@
         "laravel/ui": "^2.2",
         "morilog/jalali": "3.*",
         "nicolaslopezj/searchable": " 1.*",
+        "santigarcor/laratrust": "^6.2",
         "ybazli/faker": "^1.0"
     },
     "require-dev": {
