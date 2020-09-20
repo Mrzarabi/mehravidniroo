@@ -30,11 +30,6 @@ return [
             'comment' => 'c,r',
         ],
         
-        '40dd0ea1-c598-47f7-b138-a8055f0b5c64' => [
-            'category' => 'r',
-            'product' => 'r',
-            'image' => 'r',
-        ],
         // 'administrator' => [
         //     'users' => 'c,r,u,d',
         //     'profile' => 'r,u'
