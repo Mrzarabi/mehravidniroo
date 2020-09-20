@@ -37,8 +37,6 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
         Route::put('multi/delete/comment', 'CommentController@multiDelete');
         
         Route::get('user', 'UserController@index');
-        Route::get('user/{user}', 'UserController@show');
-        Route::put('user/{user}', 'UserController@update');
         Route::delete('user/{user}', 'UserController@destroy');
         Route::put('multi/delete/user', 'UserController@multiDelete');
         Route::get('user/search/{query?}', 'UserController@search');
@@ -63,18 +61,22 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
         Route::get('product/{product}', 'ProductController@show');
 
         Route::post('comment', 'CommentController@store');
-        
-        Route::get('user/{user}', 'UserController@show');
-        Route::put('user/{user}', 'UserController@update');
-        
-        Route::post('send/ticket', 'TicketController@sendTicket');
     }); 
 
-    Route::middleware(['role:customer'])->group( function() {
+    Route::middleware(['role:40dd0ea1-c598-47f7-b138-a8055f0b5c64'])->group( function() {
         Route::get('category', 'CategoryController@index');
         Route::get('category/{category}', 'CategoryController@show');
         
         Route::get('product', 'ProductController@index');
         Route::get('product/{product}', 'ProductController@show');
     }); 
+
+    Route::middleware('auth:api')->group( function() {
+
+        Route::get('user/{user}', 'UserController@show');
+        Route::put('user/{user}', 'UserController@update');
+
+        Route::post('send/ticket', 'TicketController@sendTicket');
+    });
+    
 });
