@@ -20,13 +20,19 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
     Route::post('login', 'UserController@login');
     Route::post('register', 'UserController@register');
     
+    Route::get('category', 'CategoryController@index');
+    Route::get('category/{category}', 'CategoryController@show');
+    
+    Route::get('product', 'ProductController@index');
+    Route::get('product/{product}', 'ProductController@show');
+    
     Route::get('category/search/{query?}', 'CategoryController@search');
     Route::get('product/search/{query?}', 'ProductController@search');
     
     Route::middleware(['auth:api', 'role:100e82ba-e1c0-4153-8633-e1bd228f7399'])->group( function() {
         Route::resource('category', 'CategoryController');
         
-        Route::resource('product', 'ProductController');
+        // Route::resource('product', 'ProductController');
         Route::put('multi/delete/product', 'ProductController@multiDelete');
         Route::post('upload/{product}', 'ProductController@upload');
         Route::post('update/upload/{product}', 'ProductController@updateUpload');
@@ -54,22 +60,14 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
     }); 
 
     Route::middleware(['auth:api', 'role:3362c127-65aa-4950-b14f-2fc86b53ea88'])->group( function() {
-        Route::get('category', 'CategoryController@index');
-        Route::get('category/{category}', 'CategoryController@show');
-        
-        Route::get('product', 'ProductController@index');
-        Route::get('product/{product}', 'ProductController@show');
 
+        Route::get('user/{user}', 'UserController@show');
+        Route::put('user/{user}', 'UserController@update');
+        Route::post('send/ticket', 'TicketController@sendTicket');
         Route::post('comment', 'CommentController@store');
     }); 
 
-    Route::middleware(['role:40dd0ea1-c598-47f7-b138-a8055f0b5c64'])->group( function() {
-        Route::get('category', 'CategoryController@index');
-        Route::get('category/{category}', 'CategoryController@show');
         
-        Route::get('product', 'ProductController@index');
-        Route::get('product/{product}', 'ProductController@show');
-    }); 
 
     Route::middleware('auth:api')->group( function() {
 
