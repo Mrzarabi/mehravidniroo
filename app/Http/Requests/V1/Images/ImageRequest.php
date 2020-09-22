@@ -24,7 +24,7 @@ class ImageRequest extends FormRequest
     public function rules()
     {
         return [
-            'images.*'          => [ 'nullable', 'image', 'mimes:jpeg,jpg,png,gif' ],
+            'images.*'   => [ 'nullable', 'image', 'mimes:jpeg,jpg,png,gif' ],
 
             /**
              * Relations
