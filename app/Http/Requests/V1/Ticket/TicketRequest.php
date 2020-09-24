@@ -32,7 +32,10 @@ class TicketRequest extends FormRequest
                 ? ['nullable', 'string', 'email', 'max:255'] 
                 : ['required', 'string', 'email',' max:255'] ],
 
-            'title' => 'required|string|max:255',
+            'title' => [ auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') 
+                ? ['nullable', 'string', 'max:255'] 
+                : ['required', 'string', ' max:255'] ], 
+
             'body' => 'required|string',
             'phone_number' => 'nullable|regex:/^09[0-9]{9}$/',
             
