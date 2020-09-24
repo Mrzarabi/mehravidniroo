@@ -27,7 +27,7 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
     Route::get('category/{category}', 'CategoryController@show');
     Route::get('category/search/{query?}', 'CategoryController@search');
     
-    Route::get('product', 'ProductController@index');
+    Route::get('free/product', 'ProductController@index');
     Route::get('product/{product}', 'ProductController@show');
     Route::get('product/search/{query?}', 'ProductController@search');
     
@@ -87,7 +87,8 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
 
 });
 
-Route::middleware(['auth:api', 'role:3362c127-65aa-4950-b14f-2fc86b53ea88'])->group( function()
+Route::middleware(['auth:api'])->group( function()
 {
+    Route::get('v1/product', 'Api\V1\ProductController@index');
     Route::post('v1/template/sort/product', 'Controller@sortProduct');
 }); 
