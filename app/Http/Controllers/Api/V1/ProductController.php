@@ -26,6 +26,22 @@ class ProductController extends Controller
     {
         $products = Product::latest()->paginate(9);
         return new ProductCollection($products);
+
+        // if( auth()->user() ) {
+
+        //         $user = auth()->user();
+        //         if( $user->hasRole([
+        //             '3362c127-65aa-4950-b14f-2fc86b53ea88',
+        //             '100e82ba-e1c0-4153-8633-e1bd228f7399' ])) {
+        //                 $products = Product::latest()->paginate(9)->makeHidden('title');;
+        //             } else {
+        //                 $products = Product::orderBy('c_price', 'DESC')->paginate(9);
+        //             }
+        //         return new ProductCollection($products); 
+        //     } else {
+        //         $products = Product::orderBy('c_price', 'DESC')->paginate(9);
+        //         return new ProductCollection($products);
+        //     }
     }
 
     /**
@@ -144,9 +160,7 @@ class ProductController extends Controller
                     $file = $this->upload_image($image);
                     $product->images()->update(['image' => $file]);
                 }
-            } else {
-                $product->images()->update(['image' => $product->images()->image]);
-            }
+            } 
 
             return response([
                 'data' => 'تصاویر با موفقیت به روز رسانی شدند',
