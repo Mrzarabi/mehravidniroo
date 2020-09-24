@@ -121,7 +121,7 @@ class ProductController extends Controller
 
             return response([
                 'data' => $post->id,
-                'data' => 'محصول مورد نظر با موفقیت به روز رسانی شد',
+                'message' => 'محصول مورد نظر با موفقیت به روز رسانی شد',
                 'status' => 'success'
             ]);
         }
