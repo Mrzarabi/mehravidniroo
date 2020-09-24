@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('template/product', 'Controller@resentProduct');
 Route::post('template/sort/product', 'Controller@sortProduct');
+// Route::post('product/filter/{filters}', 'Api\V1\ProductController@productFilter');
 
 Route::prefix('v1')->namespace('Api\V1')->group( function () {
 
@@ -61,7 +62,6 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
         Route::put('multi/delete/user', 'UserController@multiDelete');
         Route::get('user/search/{query?}', 'UserController@search');
         
-        Route::resource('role', 'RoleController');
         Route::post('attach/role/{user}', 'RoleController@attachRole');
         Route::post('detach/role/{user}', 'RoleController@detachRole');
 
