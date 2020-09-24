@@ -69,9 +69,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
-        if( $user->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
-            $users = User::latest()->paginate(10);
+        if(auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399')) {
+            $users = User::with('roles')
+                ->whereNotIn('email', ['owner@gmail.com', 'helper@gmail.com'])
+                ->latest()
+                ->paginate(10);
+
             return new UserCollection($users);
         }
     }
