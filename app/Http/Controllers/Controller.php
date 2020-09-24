@@ -21,7 +21,6 @@ class Controller extends BaseController
      */
     public static function upload_image($image)
     {
-        return $image;
         $time = Carbon::now();
         $file_path = "uploads/images/{$time->year}/{$time->month}/{$time->day}/";
         $file_name = $image->getClientOriginalName();
