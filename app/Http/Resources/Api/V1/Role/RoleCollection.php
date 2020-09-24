@@ -16,9 +16,13 @@ class RoleCollection extends ResourceCollection
     public function toArray($request)
     {
         return $this->collection->map( function($item){
+            if( $item->name == '3362c127-65aa-4950-b14f-2fc86b53ea88' ) {
+                $name =  'کاربر ویژه';
+            } else {
+                $name = 'کاربر معمولی';
+            }
             return [
-                'name' => $item->name,
-                // 'users' => new UserCollection($item->id)
+                'name' => $name 
             ];
         });
     }
