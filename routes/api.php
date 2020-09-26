@@ -14,10 +14,15 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('template/product', 'Controller@resentProduct');
-Route::post('template/sort/product', 'Controller@sortProduct');
-// Route::post('product/filter/{filters}', 'Api\V1\ProductController@productFilter');
+//TODO
+//this Routes for users who thy don't have anything and we don't need namespace 
+Route::prefix('v1/free/template')->group( function() {
 
+    Route::get('product', 'Controller@resentProduct');
+    Route::post('sort/product', 'Controller@sortProduct');
+});
+
+// this Route group for users who they don't have anything  but we need namespacce for controller
 Route::prefix('v1')->namespace('Api\V1')->group( function () {
 
     Route::post('login', 'UserController@login');
@@ -28,19 +33,27 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
     Route::get('category/search/{query?}', 'CategoryController@search');
     
     Route::get('free/product', 'ProductController@index');
-    Route::get('product/{product}', 'ProductController@show');
+    Route::get('free/product/{product}', 'ProductController@show');
     Route::get('product/search/{query?}', 'ProductController@search');
+    //TODO 
+    Route::post('filter/{filters}', 'ProductController@productFilter');
     
-    Route::middleware('auth:api')->group( function() {
+    // this Route group for users who just login but they for connent to the controller we should have namespace
+    Route::prefix('free')->middleware('auth:api')->group( function() {
 
         Route::get('user/{user}', 'UserController@show');
         Route::put('user/{user}', 'UserController@update');
 
-        Route::post('comment', 'CommentController@store');
+        //TODO talk to reza about this route which the user was login but doesn't have any role 
+        //TODO talk about update product and update upload images
+        // Route::post('comment', 'CommentController@store');
+
         Route::post('send/ticket', 'TicketController@sendTicket');
     });
     
+    // this Route group for users who login and they have role 100...
     Route::middleware(['auth:api', 'role:100e82ba-e1c0-4153-8633-e1bd228f7399'])->group( function() {
+
         Route::post('category', 'CategoryController@store');
         Route::put('category/{category}', 'CategoryController@update');
         Route::delete('category/{category}', 'CategoryController@destroy');
@@ -70,25 +83,30 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
         Route::delete('ticket/{ticket}', 'TicketController@destroy');
         Route::post('send/ticket', 'TicketController@sendTicket');
         Route::post('ticket/status/{ticket}', 'TicketController@ticketStatus');
-
-
     }); 
 
+    // this Route group for users who login and they have role 336...
     Route::middleware(['auth:api', 'role:3362c127-65aa-4950-b14f-2fc86b53ea88'])->group( function() {
 
+        Route::get('product', 'ProductController@index');
+        Route::get('product/{product}', 'ProductController@show');
         Route::get('user/{user}', 'UserController@show');
         Route::put('user/{user}', 'UserController@update');
         Route::post('send/ticket', 'TicketController@sendTicket');
         Route::post('comment', 'CommentController@store');
-
-        // Route::post('template/sort/product', 'Controller@sortProduct');
     }); 
     
 
 });
 
+// this Route group for users who login and they have role 336... but we should connect to main controller without namespace
+Route::middleware(['auth:api', 'role:3362c127-65aa-4950-b14f-2fc86b53ea88'])->group( function() {
+
+    Route::get('v1/template/product', 'Controller@resentProduct');
+}); 
+
+// this Route group for users who login and they don't have any Role or they have Role but for connnent to the controller with namespaec
 Route::middleware(['auth:api'])->group( function()
 {
-    Route::get('v1/product', 'Api\V1\ProductController@index');
     Route::post('v1/template/sort/product', 'Controller@sortProduct');
 }); 
