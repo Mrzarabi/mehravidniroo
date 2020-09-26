@@ -44,21 +44,19 @@ class CommentController extends Controller
      */
     public function store(CommentRequest $request)
     {
-        if( auth()->user()->hasRole(['100e82ba-e1c0-4153-8633-e1bd228f7399', '3362c127-65aa-4950-b14f-2fc86b53ea88']) ) {
-            auth()->user()->comments()->create( $request->all() );
+        $comment = auth()->user()->comments()->create( $request->all() );
 
-            if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
-                $ticket->update([
-                    'status' => true,
-                    'is_show' => true
-                ]);
-            }
-
-            return response([
-                'date' => 'نظر شما با موفقیت ثبت گردید',
-                'status' => 'success'
+        if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
+            $comment->update([
+                'status' => true,
+                'is_show' => true
             ]);
         }
+
+        return response([
+            'date' => 'نظر شما با موفقیت ثبت گردید',
+            'status' => 'success'
+        ]);
     }
 
     /**
