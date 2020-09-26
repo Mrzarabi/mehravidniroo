@@ -24,13 +24,14 @@ Route::prefix('v1/free/template')->group( function() {
 
 // this Route group for users who they don't have anything  but we need namespacce for controller
 Route::prefix('v1')->namespace('Api\V1')->group( function () {
-
+    
     Route::post('login', 'UserController@login');
     Route::post('register', 'UserController@register');
     
     Route::get('category', 'CategoryController@index');
     Route::get('category/{category}', 'CategoryController@show');
     Route::get('category/search/{query?}', 'CategoryController@search');
+    
     
     Route::get('free/product', 'ProductController@index');
     Route::get('free/product/{product}', 'ProductController@show');
@@ -44,9 +45,8 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
         Route::get('user/{user}', 'UserController@show');
         Route::put('user/{user}', 'UserController@update');
 
-        //TODO talk to reza about this route which the user was login but doesn't have any role 
         //TODO talk about update product and update upload images
-        // Route::post('comment', 'CommentController@store');
+        Route::post('comment', 'CommentController@store');
 
         Route::post('send/ticket', 'TicketController@sendTicket');
     });
@@ -95,8 +95,6 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
         Route::post('send/ticket', 'TicketController@sendTicket');
         Route::post('comment', 'CommentController@store');
     }); 
-    
-
 });
 
 // this Route group for users who login and they have role 336... but we should connect to main controller without namespace
