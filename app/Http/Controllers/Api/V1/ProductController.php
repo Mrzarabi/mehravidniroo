@@ -26,22 +26,6 @@ class ProductController extends Controller
     {
         $products = Product::latest()->paginate(9);
         return new ProductCollection($products);
-
-        // if( auth()->user() ) {
-
-        //         $user = auth()->user();
-        //         if( $user->hasRole([
-        //             '3362c127-65aa-4950-b14f-2fc86b53ea88',
-        //             '100e82ba-e1c0-4153-8633-e1bd228f7399' ])) {
-        //                 $products = Product::latest()->paginate(9)->makeHidden('title');;
-        //             } else {
-        //                 $products = Product::orderBy('c_price', 'DESC')->paginate(9);
-        //             }
-        //         return new ProductCollection($products); 
-        //     } else {
-        //         $products = Product::orderBy('c_price', 'DESC')->paginate(9);
-        //         return new ProductCollection($products);
-        //     }
     }
 
     /**
@@ -137,6 +121,7 @@ class ProductController extends Controller
 
             return response([
                 'data' => $post->id,
+                'images' => $post->images()->get(),
                 'message' => 'محصول مورد نظر با موفقیت به روز رسانی شد',
                 'status' => 'success'
             ]);
@@ -154,18 +139,24 @@ class ProductController extends Controller
         if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
             if($request->images)
             {
+                $past_images = $product->images()->get();
+                foreach ($past_images as $image) {
+                    $image->delete();
+                }
+
                 $images = $request->images;
                 foreach ($images as $image) {
-                    
+
                     $file = $this->upload_image($image);
-                    $product->images()->update(['image' => $file]);
+                    $product->images()->create(['image' => $file]);
                 }
+
+                return response([
+                    'data' => 'تصاویر با موفقیت به روز رسانی شدند',
+                    'status' => 'success'
+                ]);
             } 
 
-            return response([
-                'data' => 'تصاویر با موفقیت به روز رسانی شدند',
-                'status' => 'success'
-            ]);
         }
     }
 
