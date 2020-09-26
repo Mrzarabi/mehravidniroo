@@ -18,7 +18,7 @@ class ProductCollection extends ResourceCollection
     {
         if( auth()->user() ) {
 
-        $user = auth()->user();
+            $user = auth()->user();
             if( $user->hasRole([
                 '3362c127-65aa-4950-b14f-2fc86b53ea88',
                 '100e82ba-e1c0-4153-8633-e1bd228f7399' ])) {
