@@ -59,6 +59,8 @@ class UserController extends Controller
             'api_token' => Str::random(100)
         ]);
 
+        $user->attachRole('40dd0ea1-c598-47f7-b138-a8055f0b5c64');
+
         return new UserResource($user);
     }
 
