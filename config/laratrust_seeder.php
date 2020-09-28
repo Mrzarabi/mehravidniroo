@@ -29,6 +29,15 @@ return [
             'ticket' => 'c,r',
             'comment' => 'c,r',
         ],
+
+        '40dd0ea1-c598-47f7-b138-a8055f0b5c64' => [
+            'user' => 'r,u',
+            'category' => 'r',
+            'product' => 'r',
+            'image' => 'r',
+            'ticket' => 'c,r',
+            'comment' => 'c,r',
+        ],
         
         // 'administrator' => [
         //     'users' => 'c,r,u,d',
