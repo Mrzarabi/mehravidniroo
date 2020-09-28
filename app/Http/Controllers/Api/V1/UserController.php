@@ -58,7 +58,6 @@ class UserController extends Controller
             'password' => bcrypt($validData['password']),
             'api_token' => Str::random(100)
             ]);
-            return $user;
             
         $user->attachRole('40dd0ea1-c598-47f7-b138-a8055f0b5c64');
 
