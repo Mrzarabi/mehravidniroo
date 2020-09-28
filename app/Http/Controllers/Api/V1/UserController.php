@@ -53,6 +53,7 @@ class UserController extends Controller
             'password' => 'required|string|min:6|confirmed',
         ]);
 
+        return $request;
         $user = User::create([
             'email' => $validData['email'],
             'password' => bcrypt($validData['password']),
