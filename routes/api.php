@@ -48,7 +48,7 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
     Route::post('filter/{filters}', 'ProductController@productFilter');
     
     // this Route group for users who login and they have role 100...
-    Route::prefix('a')->middleware(['auth:api', 'role:100e82ba-e1c0-4153-8633-e1bd228f7399'])->group( function() {
+    Route::middleware(['auth:api', 'role:100e82ba-e1c0-4153-8633-e1bd228f7399'])->group( function() {
 
         Route::resource('category', 'CategoryController');
         
