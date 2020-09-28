@@ -53,13 +53,13 @@ class UserController extends Controller
             'password' => 'required|string|min:6|confirmed',
         ]);
 
-        return $request;
         $user = User::create([
             'email' => $validData['email'],
             'password' => bcrypt($validData['password']),
             'api_token' => Str::random(100)
-        ]);
-
+            ]);
+            return $user;
+            
         $user->attachRole('40dd0ea1-c598-47f7-b138-a8055f0b5c64');
 
         return new UserResource($user);
