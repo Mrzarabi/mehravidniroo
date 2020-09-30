@@ -71,7 +71,6 @@ class ProductController extends Controller
             {
                 $images = $request->images;
                 foreach ($images as $image) {
-                    
                     $file = $this->upload_image($image);
                     $product->images()->create(['image' => $file]);
                 }
@@ -146,7 +145,6 @@ class ProductController extends Controller
 
                 $images = $request->images;
                 foreach ($images as $image) {
-
                     $file = $this->upload_image($image);
                     $product->images()->create(['image' => $file]);
                 }
