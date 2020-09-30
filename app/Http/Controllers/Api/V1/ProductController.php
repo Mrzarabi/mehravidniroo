@@ -72,7 +72,6 @@ class ProductController extends Controller
                 $images = $request->images;
                 foreach ($images as $image) {
                     $file = $this->upload_image($image);
-                    return $file;
                     $product->images()->create(['image' => $file]);
                 }
 
