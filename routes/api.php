@@ -45,10 +45,6 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
     Route::get('category/{category}', 'CategoryController@show');
     Route::get('category/search/{query?}', 'CategoryController@search');
     
-    //TODO 
-    Route::post('filter/data', 'ProductController@productFilter');
-    Route::get('category/filter/{category}', 'CategoryController@categoryFilter');
-    
     // this Route group for users who login and they have role 100...
     Route::middleware(['auth:api', 'role:100e82ba-e1c0-4153-8633-e1bd228f7399'])->group( function() {
 
