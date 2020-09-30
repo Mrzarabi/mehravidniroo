@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\V1\Template\SortDataRequest;
+use App\Http\Resources\Api\V1\Category\FilterCategoryCollection;
+use App\Http\Resources\Api\V1\Product\Product as ProductProduct;
 use App\Http\Resources\Api\V1\Product\ProductCollection;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class Controller extends BaseController
 {
@@ -39,25 +42,35 @@ class Controller extends BaseController
         return new ProductCollection($products);
     }
 
-    public function sortProduct(SortDataRequest $request) 
+    /**
+     * Return all product with spesial condition 
+     */
+    public function sortProduct(SortDataRequest $request, $specialProduct = null) 
     {
+        /**
+         * Sort products with newest
+         */
         if($request->sort == 'newest') 
         {
             $products = Product::latest()->paginate(9);
             return new ProductCollection($products);
         }
 
+        /**
+         * Sort products with oldest
+         */
         if($request->sort == 'oldest')
         {
             $products = Product::paginate(9);
             return new ProductCollection($products);
         }
 
-        
+        /**
+         * Sort product with expensive
+         */
         if($request->sort == 'expensive')
         {
             if( auth()->user() ) {
-
                 $user = auth()->user();
                 if( $user->hasRole([
                     '3362c127-65aa-4950-b14f-2fc86b53ea88',
@@ -73,6 +86,9 @@ class Controller extends BaseController
             }
         }
 
+        /**
+         * Sort product with cheapest 
+         */
         if($request->sort == 'cheapest')
         {
             if( auth()->user() ) {
@@ -92,4 +108,55 @@ class Controller extends BaseController
             }
         }
     } 
+
+    /**
+     * Return products with filters 
+     */
+    public function filterData(Request $request) 
+    {
+        $min = $request->min ? $request->min : 0;
+        $max = $request->max ? $request->max : 9999999;
+        if(auth()->user()) {
+            $user = auth()->user();
+            
+            if($user->hasRole([
+                '100e82ba-e1c0-4153-8633-e1bd228f7399', 
+                '3362c127-65aa-4950-b14f-2fc86b53ea88']) ) {
+
+                if($request->category) {
+
+                    $products =  Product::where('category_id', $request->category)->get();
+                    // return $products;
+                    $products = $products->whereBetween('u_price', [$min, $max]);
+                } else {
+        
+                    $products = Product::all();
+                    $products = $products->whereBetween('u_price', [$min, $max]);
+                } 
+
+            } elseif ($user->hasRole('40dd0ea1-c598-47f7-b138-a8055f0b5c64')) {
+               
+                if($request->category) {
+
+                    $products =  Product::where('category_id', $request->category)->get();
+                    $products = $products->whereBetween('c_price', [$min, $max]);
+                } else {
+        
+                    $products = Product::all();
+                    $products = $products->whereBetween('c_price', [$min, $max]);
+                }    
+            }
+        } else {
+            if($request->category) {
+
+                $products =  Product::where('category_id', $request->category)->get();
+                $products = $products->whereBetween('c_price', [$min, $max]);
+            } else {
+    
+                $products = Product::all();
+                $products = $products->whereBetween('c_price', [$min, $max]);
+            }
+        }
+        return new ProductCollection($products);
+    }
 }
