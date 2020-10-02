@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\V1\Template\SortDataRequest;
-use App\Http\Resources\Api\V1\Category\FilterCategoryCollection;
-use App\Http\Resources\Api\V1\Product\Product as ProductProduct;
 use App\Http\Resources\Api\V1\Product\ProductCollection;
 use App\Models\Category;
 use App\Models\Product;
@@ -125,38 +123,37 @@ class Controller extends BaseController
 
                 if($request->category) {
 
-                    $products =  Product::where('category_id', $request->category)->get();
-                    // return $products;
-                    $products = $products->whereBetween('u_price', [$min, $max]);
+                    $products =  Product::where('category_id', $request->category);
+                    $products = $products->whereBetween('u_price', [$min, $max])->paginate(9);
                 } else {
         
-                    $products = Product::all();
-                    $products = $products->whereBetween('u_price', [$min, $max]);
+                    $products = Product::whereBetween('u_price', [$min, $max])->paginate(9);
                 } 
+                return new ProductCollection($products);
 
             } elseif ($user->hasRole('40dd0ea1-c598-47f7-b138-a8055f0b5c64')) {
                
                 if($request->category) {
 
-                    $products =  Product::where('category_id', $request->category)->get();
-                    $products = $products->whereBetween('c_price', [$min, $max]);
+                    $products =  Product::where('category_id', $request->category);
+                    $products = $products->whereBetween('c_price', [$min, $max])->paginate(9);
                 } else {
         
-                    $products = Product::all();
-                    $products = $products->whereBetween('c_price', [$min, $max]);
-                }    
+                    $products = Product::whereBetween('c_price', [$min, $max])->paginate(9);
+                }   
+                return new ProductCollection($products); 
             }
         } else {
+            
             if($request->category) {
-
-                $products =  Product::where('category_id', $request->category)->get();
-                $products = $products->whereBetween('c_price', [$min, $max]);
+                
+                $products =  Product::where('category_id', $request->category);
+                $products = $products->whereBetween('c_price', [$min, $max])->paginate(9);
             } else {
-    
-                $products = Product::all();
-                $products = $products->whereBetween('c_price', [$min, $max]);
+                
+                $products = Product::whereBetween('c_price', [$min, $max])->paginate(9);
             }
+            return new ProductCollection($products);
         }
-        return new ProductCollection($products);
     }
 }
