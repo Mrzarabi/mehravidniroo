@@ -23,6 +23,7 @@ class Product extends Model
         'u_price',
         'c_price',
         'inventory',
+        'code',
     ];
 
     /**
