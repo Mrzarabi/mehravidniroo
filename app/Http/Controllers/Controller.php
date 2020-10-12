@@ -112,7 +112,6 @@ class Controller extends BaseController
      */
     public function filterData(Request $request) 
     {
-        return $request;
         $min = $request->min ? $request->min : 0;
         $max = $request->max ? $request->max : 9999999;
         if(auth()->user()) {
