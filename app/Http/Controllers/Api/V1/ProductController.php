@@ -50,7 +50,7 @@ class ProductController extends Controller
             $product = auth()->user()->products()->create( array_merge( $request->all()) );
             $post = new ProductResource($product);
 
-            return response([
+            return back()->response([
                 'data' => $post->id,
                 'message' => 'محصول با موفقیت ثبت گردید', 
                 'status' => 'success'

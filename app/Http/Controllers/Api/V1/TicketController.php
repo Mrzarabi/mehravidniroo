@@ -64,30 +64,29 @@ class TicketController extends Controller
      */
     public function sendTicket(TicketRequest $request)
     {
-        if( auth()->user() ) {
+        return 'test';
 
-            if($request->hasFile('image')) {
-                $image = $this->upload_image($request->file('image'));
-                
-                $ticket = auth()->user()->tickets()->create( array_merge($request->all(), [
-                    'image' => $image
-                    ]
-                ));
-            } else {
-                $ticket = auth()->user()->tickets()->create( array_merge($request->all() ));
-            }
+        if($request->hasFile('image')) {
+            $image = $this->upload_image($request->file('image'));
+            
+            $ticket = auth()->user()->tickets()->create( array_merge($request->all(), [
+                'image' => $image
+                ]
+            ));
+        } else {
+            $ticket = auth()->user()->tickets()->create( $request->all() );
+        }
 
-            if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
-                $ticket->update([
-                    'status' => true
-                ]);
-            }
-
-            return response([
-                'data' => 'تیکت شما با موفقیت ارسال شد',
-                'status' => 'success'
+        if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
+            $ticket->update([
+                'status' => true
             ]);
         }
+
+        return response([
+            'data' => 'تیکت شما با موفقیت ارسال شد',
+            'status' => 'success'
+        ]);
     }
 
     /**

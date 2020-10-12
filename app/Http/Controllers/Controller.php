@@ -23,7 +23,7 @@ class Controller extends BaseController
     public static function upload_image($image)
     {
         $time = Carbon::now();
-        $file_path = "uploads/images/{$time->year}/{$time->month}/{$time->day}/";
+        $file_path = "/uploads/images/{$time->year}/{$time->month}/{$time->day}/";
         $file_name = $image->getClientOriginalName();
         $file_name = $time->timestamp . "-{$file_name}";
         $image->move(public_path($file_path) , $file_name);
