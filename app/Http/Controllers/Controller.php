@@ -160,7 +160,7 @@ class Controller extends BaseController
     public function nothing(Request $request)
     {
         return response([
-            'message' => $request
+            'message' => ''
         ]);
     }
 }
