@@ -36,6 +36,7 @@ class Product extends JsonResource
                         'u_price' => $this->u_price,
                         'c_price' => $this->c_price,
                         'inventory' => $this->inventory,
+                        'code' => $this->code,
                         'images' => new ImageCollection(Image::where('product_id', $this->id)->get()),
                         'comments' => new CommentCollection(Comment::where('product_id', $this->id)->get()),
                     ];
@@ -51,6 +52,7 @@ class Product extends JsonResource
                         // 'u_price' => $this->u_price,
                         'c_price' => $this->c_price,
                         'inventory' => $this->inventory,
+                        'code' => $this->code,
                         'images' => new ImageCollection(Image::where('product_id', $this->id)->get()),
                         'comments' => new CommentCollection(Comment::where('product_id', $this->id)->get()),
                     ];
@@ -65,6 +67,7 @@ class Product extends JsonResource
                 'body' => $this->body,
                 'c_price' => $this->c_price,
                 'inventory' => $this->inventory,
+                'code' => $this->code,
                 'images' => new ImageCollection(Image::where('product_id', $this->id)->get()),
                 'comments' => new CommentCollection(Comment::where('product_id', $this->id)->get()),
             ];

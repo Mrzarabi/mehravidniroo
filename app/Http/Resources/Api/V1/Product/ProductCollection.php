@@ -33,6 +33,7 @@ class ProductCollection extends ResourceCollection
                                 'u_price' => $item->u_price,
                                 'c_price' => $item->c_price,
                                 'inventory' => $item->inventory,
+                                'code' => $item->code,
                                 'images' => new ImageCollection( Image::where('product_id', $item->id)->get() ),
                             ];
                         })
@@ -48,6 +49,7 @@ class ProductCollection extends ResourceCollection
                                 'desc' => $item->desc,
                                 'c_price' => $item->c_price,
                                 'inventory' => $item->inventory,
+                                'code' => $item->code,
                                 'images' => new ImageCollection( Image::where('product_id', $item->id)->get() ),
                             ];
                         })
@@ -63,6 +65,7 @@ class ProductCollection extends ResourceCollection
                         'desc' => $item->desc,
                         'c_price' => $item->c_price,
                         'inventory' => $item->inventory,
+                        'code' => $item->code,
                         'images' => new ImageCollection( Image::where('product_id', $item->id)->get() ),
                     ];
                 })
