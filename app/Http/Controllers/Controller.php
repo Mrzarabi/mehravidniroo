@@ -159,7 +159,6 @@ class Controller extends BaseController
 
     public function nothing(Request $request)
     {
-        return 'test';
         return response([
             'message' => ''
         ]);
