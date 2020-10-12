@@ -46,6 +46,7 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
+        return $request;
         if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
             $product = auth()->user()->products()->create( array_merge( $request->all()) );
             $post = new ProductResource($product);
