@@ -112,6 +112,7 @@ class Controller extends BaseController
      */
     public function filterData(Request $request) 
     {
+        return $request;
         $min = $request->min ? $request->min : 0;
         $max = $request->max ? $request->max : 9999999;
         if(auth()->user()) {
@@ -120,7 +121,7 @@ class Controller extends BaseController
             if($user->hasRole([
                 '100e82ba-e1c0-4153-8633-e1bd228f7399', 
                 '3362c127-65aa-4950-b14f-2fc86b53ea88']) ) {
-
+                
                 if($request->category) {
 
                     $products =  Product::where('category_id', $request->category);
