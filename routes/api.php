@@ -33,6 +33,7 @@ Route::prefix('v1/free/template')->group( function() {
     Route::get('product', 'Controller@resentProduct');
     Route::post('sort/product', 'Controller@sortProduct');
     Route::post('filter/data', 'Controller@filterData');
+    Route::post('nothing', 'Controller@nothing');
 });
 
 // this Route group for users who they don't have anything  but we need namespacce for controller

@@ -156,4 +156,11 @@ class Controller extends BaseController
             return new ProductCollection($products);
         }
     }
+
+    public function nothing(Request $request)
+    {
+        return response([
+            'message' => $request
+        ]);
+    }
 }
