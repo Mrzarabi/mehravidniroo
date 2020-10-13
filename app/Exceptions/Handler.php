@@ -2,7 +2,10 @@
 
 namespace App\Exceptions;
 
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -50,6 +53,22 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+
+        if($exception instanceof ModelNotFoundException) {
+
+            return $this->NotFoundExceptionMessage($request, $exception);
+        } 
+
         return parent::render($request, $exception);
+    }
+
+    public function NotFoundExceptionMessage($request, Exception $exception)
+    {
+        return $request->wantsJson() 
+            ? new JsonResource([
+                'data' => 'در خواست شما درست نمی باشد',
+                'status' => 'error'
+            ], 404)
+            : parent::render($request, $exception);
     }
 }
