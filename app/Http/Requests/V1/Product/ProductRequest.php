@@ -30,7 +30,7 @@ class ProductRequest extends FormRequest
             'u_price'           => 'nullable|integer|min:0',
             'c_price'           => 'nullable|integer|min:0',
             'inventory'           => 'nullable|integer|min:0',
-            'code'           => 'nullable|integer',
+            'code'           => 'nullable|string',
 
             /**
              * Relations
