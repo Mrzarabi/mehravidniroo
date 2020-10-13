@@ -14,6 +14,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class ProductController extends Controller
 {
@@ -24,6 +25,12 @@ class ProductController extends Controller
      */
     public function index()
     {
+        // Use this for change password for Helper 
+        // $user = User::find('78177cc1-5c71-4b9b-85ce-e0de0fc9f1c6');
+        // $user->update([
+        //     'password' => Hash::make('123qweA')
+        // ]);
+        
         $products = Product::latest()->paginate(9);
         return new ProductCollection($products);
     }
