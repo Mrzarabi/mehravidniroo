@@ -44,7 +44,6 @@ class CommentController extends Controller
      */
     public function store(CommentRequest $request)
     {
-        return $request;
         $comment = auth()->user()->comments()->create( $request->all() );
 
         if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
