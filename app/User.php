@@ -7,6 +7,7 @@ use App\Models\Comment;
 use App\Models\Product;
 use App\Models\Role;
 use App\Models\Ticket;
+use App\Notifications\PasswordResetNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -104,6 +105,17 @@ class User extends Authenticatable
     public function getKeyType()
     {
         return 'string';
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new PasswordResetNotification($token));
     }
 
     /**
