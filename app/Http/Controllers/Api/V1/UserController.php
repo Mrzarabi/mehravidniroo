@@ -26,7 +26,7 @@ class UserController extends Controller
     {
         $validData = $this->validate($request, [
             'email' => 'required|email|string|max:255|exists:users',
-            'password' => 'required|string|min:6'
+            'password' => 'required|string|min:8'
         ]);
 
         if(! Auth::attempt( $validData ) ){
@@ -50,7 +50,7 @@ class UserController extends Controller
     {
         $validData = $this->validate($request, [
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
         $user = User::create([
