@@ -41,6 +41,8 @@ Route::prefix('v1')->namespace('Api\V1')->group( function () {
     
     Route::post('login', 'UserController@login');
     Route::post('register', 'UserController@register');
+    Route::post('/password/email', 'ForgotPasswordController@sendResetLinkEmail');
+    Route::post('/password/reset', 'ResetPasswordController@reset');
     
     Route::get('category', 'CategoryController@index');
     Route::get('category/{category}', 'CategoryController@show');
