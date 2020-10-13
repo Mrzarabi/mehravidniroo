@@ -30,6 +30,11 @@ class ResetPasswordController extends Controller
      */
     protected function sendResetResponse(Request $request,  $response)
     {
+        if($response == 'passwords.reset') {
+            
+            $response = ':) پسورد شما با موفقیت به روز رسانی شد ';
+        }
+
         return response([
             'message' => $response
         ]);
@@ -44,8 +49,16 @@ class ResetPasswordController extends Controller
      */
     protected function sendResetFailedResponse(Request $request, $response)
     {
+        if( $response == 'passwords.token' ) {
+
+            $response = ':( درخواست شما منقضی شده لطفا دوباره اقدام به بازیابی پسورد کنید';
+        } else {
+
+            $response = ':( اطلاعات وارد شده صحیح نمی باشد ';
+        }
+
         return response([
-            'error' => $response
+            'data' => $response
         ], 422);
     }
 }
