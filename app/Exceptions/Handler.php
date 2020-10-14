@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -57,7 +58,14 @@ class Handler extends ExceptionHandler
         if($exception instanceof ModelNotFoundException) {
 
             return $this->NotFoundExceptionMessage($request, $exception);
-        } 
+        } elseif ($exception instanceof AuthenticationException) {
+            return $request->wantsJson() 
+            ? new JsonResource([
+                'data' => 'ابتدا باید وارد حساب کاربری خود شوید',
+                'status' => 'error'
+            ], 404)
+            : parent::render($request, $exception);
+        }
 
         return parent::render($request, $exception);
     }
