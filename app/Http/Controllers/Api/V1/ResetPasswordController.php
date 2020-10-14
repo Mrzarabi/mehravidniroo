@@ -36,7 +36,8 @@ class ResetPasswordController extends Controller
         }
 
         return response([
-            'data' => $response
+            'data' => $response,
+            'status' => 'succes'
         ]);
     }
 
@@ -58,7 +59,8 @@ class ResetPasswordController extends Controller
         }
 
         return response([
-            'data' => $response
+            'data' => $response,
+            'status' => 'error'
         ], 422);
     }
 }

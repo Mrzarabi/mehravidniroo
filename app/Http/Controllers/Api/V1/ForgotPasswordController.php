@@ -31,11 +31,12 @@ class ForgotPasswordController extends Controller
     protected function sendResetLinkResponse(Request $request, $response)
     {
         if($response == 'passwords.sent') {
-            
+
             $response = ':) لینک بازیابی پسورد به جیمیل شما ارسال شد ';
         }
         return response([
-            'data' => $response
+            'data' => $response,
+            'status' => 'succes'
         ]);;
     }
 
@@ -59,7 +60,8 @@ class ForgotPasswordController extends Controller
         }
 
         return response([
-            'data' => $response
+            'data' => $response,
+            'status' => 'error'
         ], 422);
     }
 }
