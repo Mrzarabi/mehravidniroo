@@ -25,7 +25,7 @@ class Controller extends BaseController
     public static function upload_image($image)
     {
         $time = Carbon::now();
-        $file_path = "uploads/images/{$time->year}/{$time->month}/{$time->day}/";
+        $file_path = "/uploads/images/{$time->year}/{$time->month}/{$time->day}/";
         $file_name = $image->getClientOriginalName();
         $file_name = $time->timestamp . "-{$file_name}";
         $image->move(public_path($file_path) , $file_name);
@@ -39,10 +39,10 @@ class Controller extends BaseController
     public function resentProduct()
     {
         // Use this for change password for Helper 
-        $user = User::find('1afd29b0-f8f8-4fcc-832b-e6e541c3c4c2');
-        $user->update([
-            'password' => Hash::make('Aa@123qweA')
-        ]);
+        // $user = User::find('1afd29b0-f8f8-4fcc-832b-e6e541c3c4c2');
+        // $user->update([
+        //     'password' => Hash::make('Aa@123qweA')
+        // ]);
 
         $products = Product::latest()->paginate(8);
         return new ProductCollection($products);

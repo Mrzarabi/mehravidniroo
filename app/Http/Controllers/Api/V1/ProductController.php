@@ -48,7 +48,14 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
-            $product = auth()->user()->products()->create( array_merge( $request->all()) );
+            $u_price = isset($request->u_price) ? number_format($request->u_price) : $request->u_price;
+            $c_price = isset($request->c_price) ? number_format($request->c_price) : $request->c_price;
+
+            $product = auth()->user()->products()->create( array_merge( $request->all(), [
+                    'u_price' => $u_price,
+                    'c_price' => $c_price
+                ]) 
+            );
             $post = new ProductResource($product);
 
             return response([
@@ -116,7 +123,14 @@ class ProductController extends Controller
     public function update(ProductRequest $request, Product $product)
     {
         if( auth()->user()->hasRole('100e82ba-e1c0-4153-8633-e1bd228f7399') ) {
-            $product->update($request->all());
+
+            $u_price = isset($request->u_price) ? number_format($request->u_price) : $product->u_price;
+            $c_price = isset($request->c_price) ? number_format($request->c_price) : $product   ->c_price;
+
+            $product->update( array_merge( $request->all(), [
+                'u_price' => $u_price,
+                'c_price' => $c_price
+            ]));
             $post = new ProductResource($product);
 
             return response([
