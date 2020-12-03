@@ -45,7 +45,7 @@ class PasswordResetNotification extends Notification
         return (new MailMessage)
                     ->subject('تغییر رمز عبور ')
                     ->line('سلام، ما این ایمیل را بخاطر درخواست شما ارسال کردیم ')
-                    ->line(' مهراوید نیرو ')
+                    ->line(' این پیام مخصوص تغییر رمز عبور در سایت mehravidniroo میباشد که در 60 ثانیه اینده منقضی میشود.')
                     ->action('تغییر رمز عبور', $urlToResetForm)
                     ->line('از اعتماد شما متشکریم!');
     }
