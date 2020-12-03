@@ -15,6 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
-Route::get('/{vueroute?}', 'AppController@index')->where('vueroute', '.*');
+Route::get('/', 'Template\IndexController@index');
 
 

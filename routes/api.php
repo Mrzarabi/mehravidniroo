@@ -25,6 +25,7 @@ Route::prefix('v1/free')->namespace('Api\V1')->group( function() {
     Route::get('category', 'CategoryController@index');
     Route::get('category/{category}', 'CategoryController@show');
     Route::get('category/search/{query?}', 'CategoryController@search');
+    Route::post('banner', 'BannerController@store');
 });
 
 //this Routes for users who thy don't have anything and we don't need namespace for controller
@@ -33,7 +34,6 @@ Route::prefix('v1/free/template')->group( function() {
     Route::get('product', 'Controller@resentProduct');
     Route::post('sort/product', 'Controller@sortProduct');
     Route::post('filter/data', 'Controller@filterData');
-    Route::post('nothing', 'Controller@nothing');
 });
 
 // this Route group for users who they don't have anything  but we need namespacce for controller
